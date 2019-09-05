@@ -6,6 +6,10 @@
 3. It demonstrates superior performance on various real-world tasks while being robust to noises and missing values.
 4. It is applicable to most datasets since it does not require any pre-defined distance metric.
 
+The figure below is an overview of the SPE framework.
+
+![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/framework.png)
+
 This repository contains:
 
 ## 1. Additional experimental results:
