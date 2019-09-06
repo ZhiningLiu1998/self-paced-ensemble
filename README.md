@@ -2,7 +2,7 @@
 
 **Self-paced Ensemble (SPE) is a general learning framework for massive highly imbalanced classification.**
 
-SPE performs strictly balanced under-sampling in each iteration and is therefore very computationally efficient. In addition, SPE does not rely on calculating the distance between samples to perform resampling. It can be easily applied to datasets that lack explicit distance metrics (e.g. with categorical features / missing values) without any modification. Compared to existing imbalance learning methods, SPE works particularly well on datasets that are large-scale, noisy, and highly imbalanced (e.g. with imbalance ratio greater than 100:1). Such kind of data widely exists in real-world industrial applications.
+SPE performs strictly balanced under-sampling in each iteration and is therefore very computationally efficient. In addition, SPE does not rely on calculating the distance between samples to perform resampling. It can be easily applied to datasets that lack well-defined distance metrics (e.g. with categorical features / missing values) without any modification. Compared to existing imbalance learning methods, SPE works particularly well on datasets that are large-scale, noisy, and highly imbalanced (e.g. with imbalance ratio greater than 100:1). Such kind of data widely exists in real-world industrial applications.
 
 **This repository contains:**
 - Implementation of Self-paced Ensemble
@@ -15,14 +15,16 @@ SPE performs strictly balanced under-sampling in each iteration and is therefore
 - Implementation of 15 resampling based imbalance learning baselines
 - Additional experimental results
 
-***NOTE:*** The implementations of [1],[3] and resampling methods are based on [imbalanced-algorithms](https://github.com/dialnd/imbalanced-algorithms) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
+**NOTE:** The implementations of [1],[3] and resampling methods are based on [imbalanced-algorithms](https://github.com/dialnd/imbalanced-algorithms) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
 
 ## Table of Contents
 
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-- [Examples](#examples)
+  - [Documentation](#documentation)
+  - [Examples](#examples)
+  - [Conducting comparative experiments](#conducting-comparative-experiments)
 - [Additional experimental results](#additional-experimental-results)
   - [Results on additional datasets](#results-on-additional-datasets)
   - [Results using additional classifiers](#results-using-additional-classifiers)
@@ -30,9 +32,7 @@ SPE performs strictly balanced under-sampling in each iteration and is therefore
 
 ## Background
 
-The rising big data era has been witnessing more classification tasks with largescale but extremely imbalance and low-quality datasets. Most of existing learning methods suffer from poor performance or low computation efficiency under such a scenario. To tackle this problem, we conduct deep investigations into the nature of class imbalance, which reveals that not only the disproportion between classes, but also other difficulties embedded in the nature of data, especially, noises and class overlapping, prevent us from learning effective classifiers. Taking those factors into consideration, we propose a novel framework for imbalance classification that aims to generate a strong ensemble by self-paced harmonizing data hardness via under-sampling. Extensive experiments have shown that this new framework, while being very computationally efficient, can lead to robust performance even under highly overlapping classes and extremely skewed distribution. Note that, our methods can be easily adapted to most of existing learning methods (e.g., C4.5, SVM, GBDT and Neural Network) to boost their performance on imbalanced data.
-
-The figure below gives an overview of the SPE framework.
+The rising big data era has been witnessing more classification tasks with largescale but extremely imbalance and low-quality datasets. Most of existing learning methods suffer from poor performance or low computation efficiency under such a scenario. To tackle this problem, we conduct deep investigations into the nature of class imbalance, which reveals that not only the disproportion between classes, but also other difficulties embedded in the nature of data, especially, noises and class overlapping, prevent us from learning effective classifiers. Taking those factors into consideration, we propose a novel framework for imbalance classification that aims to generate a strong ensemble by self-paced harmonizing data hardness via under-sampling. Extensive experiments have shown that this new framework, while being very computationally efficient, can lead to robust performance even under highly overlapping classes and extremely skewed distribution. Note that, our methods can be easily adapted to most of existing learning methods (e.g., C4.5, SVM, GBDT and Neural Network) to boost their performance on imbalanced data. The figure below gives an overview of the SPE framework.
 
 ![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/framework.png)
 
@@ -51,6 +51,8 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 ```
 
 ## Usage
+
+### Documentation
 
 **Our SPE implementation can be used much in the same way as the ensemble classifiers in [sklearn.ensemble](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble).**  
 
@@ -79,7 +81,7 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 | `base_estimator_` | *estimator* <br> The base estimator from which the ensemble is grown. |
 | `estimators_` | *list of estimator* <br> The collection of fitted base estimators. |
 
-## Examples
+### Examples
 
 **A minimal example**
 ```
@@ -112,9 +114,10 @@ spe = SelfPacedEnsemble(
 print('auc_prc_score: {}'.format(spe.score(X_test, y_test)))
 ```
 
-### Using *run_example.py*
+### Conducting comparative experiments
 
-We also provide a more complex example ([*run_example.py*](https://github.com/ZhiningLiu1998/self-paced-ensemble/run_example.py)) of how to use our implementation of ensemble methods to perform classification. To use it, simply run:
+We also provide a simple framework ([*run_example.py*](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/run_example.py)) for conveniently comparing the performance of our methods and other baselines. It is also a more complex example of how to use our implementation of ensemble methods to perform classification. To use it, simply run:
+
 ```
 python run_example.py --method=SPEnsemble --n_estimators=10 --runs=10
 ```
@@ -138,7 +141,7 @@ MCC     mean:0.868  std:0.011
 
 | Arguments   | Description   |
 | ----------- | ------------- |
-| `-m`/`--method` | *string, optional (default=`'SPEnsemble'`)* <br> support: `SPEnsemble`, `SMOTEBoost`, `SMOTEBagging`, `RUSBoost`, `UnderBagging`, `Cascade`, `all` <br> When `all`, script will run all supported methods. |
+| `-m`/`--method` | *string, optional (default=`'SPEnsemble'`)* <br> support: `SPEnsemble`, `SMOTEBoost`, `SMOTEBagging`, `RUSBoost`, `UnderBagging`, `Cascade`, `all` <br> When `all`, the script will run all supported methods. |
 | `-n`/`--n_estimators` | *integer, optional (default=10)* <br> The number of base estimators in the ensemble. |
 | `-r`/`--runs` | *integer, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
 
