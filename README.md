@@ -68,7 +68,7 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 
 | Methods    | Description   |
 | ---------- | ------------- |
-| `fit(self, X, y, label_maj=0, label_min=1)` | Build a self-paced ensemble of estimators from the training set (X, y). <br> `label_maj`/`label_min` specify the label of majority/minority class. <br> By default, we let the minority class be positive class (label=1). |
+| `fit(self, X, y, label_maj=0, label_min=1)` | Build a self-paced ensemble of estimators from the training set (X, y). <br> `label_maj`/`label_min` specify the label of majority/minority class. <br> By default, we let the minority class be positive class (`label_min=1`). |
 | `predict(self, X)` | Predict class for X. |
 | `predict_proba(self, X)` | Predict class probabilities for X. |
 | `predict_log_proba(self, X)` | Predict class log-probabilities for X. |
@@ -116,7 +116,7 @@ print('auc_prc_score: {}'.format(spe.score(X_test, y_test)))
 
 ### Conducting comparative experiments
 
-We also provide a simple framework ([*run_example.py*](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/run_example.py)) for conveniently comparing the performance of our methods and other baselines. It is also a more complex example of how to use our implementation of ensemble methods to perform classification. To use it, simply run:
+We also provide a simple framework ([*run_example.py*](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/run_example.py)) for conveniently comparing the performance of our method and other baselines. It is also a more complex example of how to use our implementation of ensemble methods to perform classification. To use it, simply run:
 
 ```
 python run_example.py --method=SPEnsemble --n_estimators=10 --runs=10
