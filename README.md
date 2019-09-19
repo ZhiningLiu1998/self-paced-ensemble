@@ -119,31 +119,26 @@ print('auc_prc_score: {}'.format(spe.score(X_test, y_test)))
 We also provide a simple framework ([*run_example.py*](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/run_example.py)) for conveniently comparing the performance of our method and other baselines. It is also a more complex example of how to use our implementation of ensemble methods to perform classification. To use it, simply run:
 
 ```
-python run_example.py --method=SPEnsemble --n_estimators=10 --runs=10
-```
-or with shortopts:
-```
-python run_example.py -m SPEnsemble -n 10 -r 10
+python run_example.py --method=SPEnsemble --n-estimators=10 --runs=10
 ```
 You should expect output console log like this:
 ```
-method_name:            SPEnsemble
-n_estimators:           10
-independent_run(s):     10
-ave_run_time:           0.723s
---------------------------
+Running method:         SPEnsemble - 10 estimators in 10 independent run(s) ...
+100%|█████████████████████████████████████████| 10/10 [00:14<00:00,  1.42s/it]]
+ave_run_time:           0.686s
+------------------------------
 Metrics:
-AUCPRC  mean:0.909  std:0.011
-F1      mean:0.872  std:0.010
-G-mean  mean:0.872  std:0.010
-MCC     mean:0.868  std:0.011
+AUCPRC  mean:0.910  std:0.009
+F1      mean:0.872  std:0.006
+G-mean  mean:0.873  std:0.007
+MCC     mean:0.868  std:0.007
 ```
 
 | Arguments   | Description   |
 | ----------- | ------------- |
-| `-m`/`--method` | *string, optional (default=`'SPEnsemble'`)* <br> support: `SPEnsemble`, `SMOTEBoost`, `SMOTEBagging`, `RUSBoost`, `UnderBagging`, `Cascade`, `all` <br> When `all`, the script will run all supported methods. |
-| `-n`/`--n_estimators` | *integer, optional (default=10)* <br> The number of base estimators in the ensemble. |
-| `-r`/`--runs` | *integer, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
+| `--method` | *string, optional (default=`'SPEnsemble'`)* <br> support: `SPEnsemble`, `SMOTEBoost`, `SMOTEBagging`, `RUSBoost`, `UnderBagging`, `Cascade`, `all` <br> When `all`, the script will run all supported methods. |
+| `--n-estimators` | *integer, optional (default=10)* <br> The number of base estimators in the ensemble. |
+| `--runs` | *integer, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
 
 
 ## Additional experimental results
