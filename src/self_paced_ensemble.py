@@ -145,7 +145,7 @@ class SelfPacedEnsemble():
             # Perform self-paced under-sampling
             sampled_bins = []
             for i_bins in range(self._k_bins):
-                if n_sample_bins[i_bins] > 0:
+                if min(len(bins[i_bins]), n_sample_bins[i_bins]) > 0:
                     np.random.seed(self._random_state)
                     idx = np.random.choice(
                         len(bins[i_bins]), 

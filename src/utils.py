@@ -16,10 +16,21 @@ from sklearn.metrics import (
     average_precision_score, 
     matthews_corrcoef,
     )
+from sklearn import datasets
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
-import sys, getopt
+
+def load_covtype_dataset(subset=0.1, random_state=None):
+    '''Load & Split training/test covtype dataset.'''
+    print ('\nDataset used: \t\tForest covertypes from UCI ({:.1%} random subset)'.format(subset))
+    X, y = datasets.fetch_covtype(return_X_y=True)
+    y = make_binary_classification_target(y, 7, verbose=True)
+    X, y = imbalance_random_subset(
+        X, y, size=0.1, random_state=random_state)
+    X_train, X_test, y_train, y_test = imbalance_train_test_split(
+        X, y, test_size=0.2, random_state=random_state)
+    return X_train, X_test, y_train, y_test
 
 def make_binary_classification_target(y, pos_label, verbose=False):
     '''Turn multi-class targets into binary classification targets.'''
@@ -27,8 +38,8 @@ def make_binary_classification_target(y, pos_label, verbose=False):
     y[pos_idx] = 1
     y[~pos_idx] = 0
     if verbose:
-        print ('Positive Target:\t{}'.format(pos_label))
-        print ('Imbalance Ratio:\t{:.3f}'.format((y==0).sum()/(y==1).sum()))
+        print ('Positive target:\t{}'.format(pos_label))
+        print ('Imbalance ratio:\t{:.3f}'.format((y==0).sum()/(y==1).sum()))
     return y
 
 def imbalance_train_test_split(X, y, test_size, random_state=None):
@@ -50,34 +61,6 @@ def imbalance_random_subset(X, y, size, random_state=None):
     _, X, _, y = imbalance_train_test_split(X, y, 
         test_size=size, random_state=random_state)
     return X, y
-
-def parse(argv, supported_methods):
-    '''Parse system arguments.'''
-    # Default values
-    method = 'SPEnsemble'
-    n_estimators = 10
-    runs = 10
-    try:
-        opts, _ = getopt.getopt(argv[1:], 'hm:n:r:',  ["method=", "n_estimators=", "runs="])
-    except getopt.GetoptError:
-        print ('Usage: run_example.py -m <method> -n <integer>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt in ('-m', '--method'):
-            if arg not in supported_methods:
-                raise Error('\n-m / --method currently only support:\n{}'.format(supported_methods))
-            method = arg
-        elif opt in ('-n', '--n_estimators'):
-            try:
-                n_estimators = int(arg)
-            except:
-                raise Error('\n-n / --n_estimator can only be integer')
-        elif opt in ('-r', '--runs'):
-            try:
-                runs = int(arg)
-            except:
-                raise Error('\n-r / --runs can only be integer')
-    return method, n_estimators, runs
 
 def auc_prc(label, y_pred):
     '''Compute AUCPRC score.'''
