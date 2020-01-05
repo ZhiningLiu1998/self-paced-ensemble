@@ -42,7 +42,7 @@ def parse():
     '''Parse system arguments.'''
     parser = argparse.ArgumentParser(
         description='Self-paced Ensemble', 
-        usage='run_example.py --method <method> --n-estimators <integer> --runs <integer>'
+        usage='run_example.py --method <method> --n_estimators <integer> --runs <integer>'
         )
     parser.add_argument('--method', type=str, default='SPEnsemble', 
         choices=METHODS+['all'], help='Name of ensmeble method')
