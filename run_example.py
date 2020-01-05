@@ -46,7 +46,7 @@ def parse():
         )
     parser.add_argument('--method', type=str, default='SPEnsemble', 
         choices=METHODS+['all'], help='Name of ensmeble method')
-    parser.add_argument('--n-estimators', type=int, default=10, help='Number of base estimators')
+    parser.add_argument('--n_estimators', type=int, default=10, help='Number of base estimators')
     parser.add_argument('--runs', type=int, default=10, help='Number of independent runs')
     return parser.parse_args()
 
