@@ -2,7 +2,7 @@
 """
 Created on Tue May 14 14:32:27 2019
 @author: ZhiningLiu1998
-mailto: zhining.liu@outlook.com / v-zhinli@microsoft.com
+mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
 """
 
 import numpy as np
@@ -16,49 +16,50 @@ class SelfPacedEnsemble():
 
     Parameters
     ----------
+
     base_estimator : object, optional (default=sklearn.Tree.DecisionTreeClassifier())
-    |   The base estimator to fit on self-paced under-sampled subsets of the dataset. 
-    |   NO need to support sample weighting. 
-    |   Built-in `fit()`, `predict()`, `predict_proba()` methods are required.
+        The base estimator to fit on self-paced under-sampled subsets of the dataset. 
+        NO need to support sample weighting. 
+        Built-in `fit()`, `predict()`, `predict_proba()` methods are required.
 
     hardness_func :  function, optional 
-    |   (default=`lambda y_true, y_pred: np.absolute(y_true-y_pred)`)
-    |   User-specified classification hardness function
-    |   |   Parameters:
-    |   |   |   y_true: 1-d array-like, shape = [n_samples] 
-    |   |   |   y_pred: 1-d array-like, shape = [n_samples] 
-    |   |   Returns:
-    |   |   |   hardness: 1-d array-like, shape = [n_samples]
+        (default=`lambda y_true, y_pred: np.absolute(y_true-y_pred)`)
+        User-specified classification hardness function
+            Parameters:
+                y_true: 1-d array-like, shape = [n_samples] 
+                y_pred: 1-d array-like, shape = [n_samples] 
+            Returns:
+                hardness: 1-d array-like, shape = [n_samples]
 
     n_estimators :  integer, optional (default=10)
-    |   The number of base estimators in the ensemble.
+        The number of base estimators in the ensemble.
 
     k_bins :        integer, optional (default=10)
-    |   The number of hardness bins that were used to approximate hardness distribution.
+        The number of hardness bins that were used to approximate hardness distribution.
 
     random_state :  integer / RandomState instance / None, optional (default=None)
-    |   If integer, random_state is the seed used by the random number generator; 
-    |   If RandomState instance, random_state is the random number generator; 
-    |   If None, the random number generator is the RandomState instance used by 
-    |   `numpy.random`.
+        If integer, random_state is the seed used by the random number generator; 
+        If RandomState instance, random_state is the random number generator; 
+        If None, the random number generator is the RandomState instance used by 
+        `numpy.random`.
+
 
     Attributes
     ----------
+
     base_estimator_ : estimator
-    |   The base estimator from which the ensemble is grown.
+        The base estimator from which the ensemble is grown.
 
     estimators_ : list of estimator
-    |   The collection of fitted base estimators.
-
+        The collection of fitted base estimators.
 
     Example:
     ```
     import numpy as np
     from sklearn import datasets
     from sklearn.tree import DecisionTreeClassifier
-    from src.self_paced_ensemble import SelfPacedEnsemble
-    from src.utils import (
-        make_binary_classification_target, imbalance_train_test_split)
+    from self_paced_ensemble import SelfPacedEnsemble
+    from utils import make_binary_classification_target, imbalance_train_test_split
 
     X, y = datasets.fetch_covtype(return_X_y=True)
     y = make_binary_classification_target(y, 7, True)
@@ -112,8 +113,7 @@ class SelfPacedEnsemble():
             X_maj, y_maj, X_min, y_min, i_estimator):
         """Private function used to perform self-paced under-sampling."""
         # Update hardness value estimation
-        y_pred_maj = self.predict_proba(X_maj)[:, 1]
-        hardness = self._hardness_func(y_maj, y_pred_maj)
+        hardness = self._hardness_func(y_maj, self._y_pred_maj)
 
         # If hardness values are not distinguishable, perform random smapling
         if hardness.max() == hardness.min():
@@ -192,6 +192,7 @@ class SelfPacedEnsemble():
         self.estimators_.append(
             self._fit_base_estimator(
                 X_train, y_train))
+        self._y_pred_maj = self.predict_proba(X_maj)[:, 1]
 
         # Loop start
         for i_estimator in range(1, self._n_estimators):
@@ -200,6 +201,10 @@ class SelfPacedEnsemble():
             self.estimators_.append(
                 self._fit_base_estimator(
                     X_train, y_train))
+            # update predicted probability
+            n_clf = len(self.estimators_)
+            y_pred_maj_last_clf = self.estimators_[-1].predict_proba(X_maj)[:, 1]
+            self._y_pred_maj = (self._y_pred_maj * (n_clf-1) + y_pred_maj_last_clf) / n_clf
 
         return self
 

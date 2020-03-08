@@ -29,9 +29,9 @@ import sklearn
 import warnings
 warnings.filterwarnings("ignore")
 
-from src.self_paced_ensemble import SelfPacedEnsemble
-from src.canonical_ensemble import *
-from src.utils import *
+from self_paced_ensemble import SelfPacedEnsemble
+from canonical_ensemble import *
+from utils import *
 import argparse
 from tqdm import trange
 

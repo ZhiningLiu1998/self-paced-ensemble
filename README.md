@@ -17,26 +17,46 @@ SPE performs strictly balanced under-sampling in each iteration and is therefore
 
 **NOTE:** The implementations of [1],[3] and resampling methods are based on [imbalanced-algorithms](https://github.com/dialnd/imbalanced-algorithms) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
 
-## Table of Contents
 
+This is the implementation for the paper "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020, Research Paper): https://arxiv.org/abs/1909.03500
+
+If you find this repository useful, please cite our work:
+
+```
+@inproceedings{
+    liu2020self-paced-ensemble,
+    title={Self-paced Ensemble for Highly Imbalanced Massive Data Classification},
+    author={Liu, Zhining and Cao, Wei and Gao, Zhifeng and Bian, Jiang and Chen, Hechang and Chang, Yi and Liu, Tie-Yan},
+    booktitle={2020 IEEE 36th International Conference on Data Engineering (ICDE)},
+    year={2020},
+    organization={IEEE}
+}
+```
+
+
+# Table of Contents
+
+- [Self-paced Ensmeble](#self-paced-ensmeble)
+- [Table of Contents](#table-of-contents)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
   - [Documentation](#documentation)
   - [Examples](#examples)
   - [Conducting comparative experiments](#conducting-comparative-experiments)
-- [Additional experimental results](#additional-experimental-results)
-  - [Results on additional datasets](#results-on-additional-datasets)
-  - [Results using additional classifiers](#results-using-additional-classifiers)
+- [Experimental results](#experimental-results)
+  - [Results on small datasets](#results-on-small-datasets)
+  - [Results on large-scale datasets](#results-on-large-scale-datasets)
+- [References](#references)
 
 
-## Background
+# Background
 
 The rising big data era has been witnessing more classification tasks with largescale but extremely imbalance and low-quality datasets. Most of existing learning methods suffer from poor performance or low computation efficiency under such a scenario. To tackle this problem, we conduct deep investigations into the nature of class imbalance, which reveals that not only the disproportion between classes, but also other difficulties embedded in the nature of data, especially, noises and class overlapping, prevent us from learning effective classifiers. Taking those factors into consideration, we propose a novel framework for imbalance classification that aims to generate a strong ensemble by self-paced harmonizing data hardness via under-sampling. Extensive experiments have shown that this new framework, while being very computationally efficient, can lead to robust performance even under highly overlapping classes and extremely skewed distribution. Note that, our methods can be easily adapted to most of existing learning methods (e.g., C4.5, SVM, GBDT and Neural Network) to boost their performance on imbalanced data. The figure below gives an overview of the SPE framework.
 
-![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/framework.png)
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/framework.png)
 
-## Install
+# Install
 
 Our SPE implementation requires following dependencies:
 - [python](https://www.python.org/) (>=3.5)
@@ -50,9 +70,9 @@ Currently you can install SPE by clone this repository. We'll release SPE on the
 git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 ```
 
-## Usage
+# Usage
 
-### Documentation
+## Documentation
 
 **Our SPE implementation can be used much in the same way as the ensemble classifiers in [sklearn.ensemble](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble).**  
 
@@ -81,7 +101,7 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 | `base_estimator_` | *estimator* <br> The base estimator from which the ensemble is grown. |
 | `estimators_` | *list of estimator* <br> The collection of fitted base estimators. |
 
-### Examples
+## Examples
 
 **A minimal example**
 ```
@@ -94,8 +114,8 @@ spe = SelfPacedEnsemble().fit(X, y)
 import numpy as np
 from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
-from src.self_paced_ensemble import SelfPacedEnsemble
-from src.utils import (make_binary_classification_target, imbalance_train_test_split)
+from self_paced_ensemble import SelfPacedEnsemble
+from utils import (make_binary_classification_target, imbalance_train_test_split)
 
 X, y = datasets.fetch_covtype(return_X_y=True)
 y = make_binary_classification_target(y, pos_label=7, verbose=True)
@@ -114,7 +134,7 @@ spe = SelfPacedEnsemble(
 print('auc_prc_score: {}'.format(spe.score(X_test, y_test)))
 ```
 
-### Conducting comparative experiments
+## Conducting comparative experiments
 
 We also provide a simple framework ([*run_example.py*](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/run_example.py)) for conveniently comparing the performance of our method and other baselines. It is also a more complex example of how to use our implementation of ensemble methods to perform classification. To use it, simply run:
 
@@ -141,38 +161,40 @@ MCC     mean:0.868  std:0.007
 | `--runs` | *integer, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
 
 
-## Additional experimental results
+# Experimental results
 
-### Results on additional datasets
-**We introduce 7 additional public datasets to validate our method SPE.**  
+## Results on small datasets
 
-Their properties vary widely from one another, with IR ranging from 9.1:1 to 111:1, dataset sizes ranging from 360 to 145,751, and feature numbers ranging from 6 to 617. See the table below for more information about these datasets.
+We introduce seven small datasets to validate our method SPE. Their properties vary widely from one another, with IR ranging from 9.1:1 to 111:1, dataset sizes ranging from 360 to 145,751, and feature numbers ranging from 6 to 617. See the table below for more information about these datasets.
 
-![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/additional_datasets.png)
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets.png)
 
 SPE was compared with other 5 ensemble-based imbalance learning methods:  
 Over-sampling-based ensemble:  `SMOTEBoost`, `SMOTEBagging`  
 Under-sampling-based ensemble: `RUSBoost`, `UnderBagging`, `Cascade`  
 We use Decision Tree as the base classifier for all ensemble methods as other classifiers such as KNN do not support Boosting-based methods. We implemented SPE with Absolute Error as the hardness function and set k=10. In each dataset, 80% samples were used for training. The rest 20% was used as the test set. All the experimental results were reported on the test set (mean and standard deviation of 50 independent runs with different random seeds for training base classifiers). 
 
-![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/additional_datasets_results.png)
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets_results.png)
 
-### Results using additional classifiers
+## Results on large-scale datasets
 
-**(supplementary of Table IV)**  
 Dataset links:
 [Credit Fraud](https://www.kaggle.com/mlg-ulb/creditcardfraud), 
 [KDDCUP](https://archive.ics.uci.edu/ml/datasets/kdd+cup+1999+data), 
 [Record Linkage](https://archive.ics.uci.edu/ml/datasets/Record+Linkage+Comparison+Patterns), 
 [Payment Simulation](https://www.kaggle.com/ntnu-testimon/paysim1).
 
-![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/statistics.png)  
-------
-![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/credit.png)
-![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/kddcup.png)
-![image](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/pic/record_paysim.png)
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/statistics.png)  
 
-## References
+------
+Comparisons of SPE with traditional resampling/ensemble methods in terms of performance & computational efficiency.
+
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results.png)
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_resampling.png)
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_ensemble.png)
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_ensemble_curve.png)
+
+# References
 
 > [1] N. V. Chawla, A. Lazarevic, L. O. Hall, and K. W. Bowyer, “Smoteboost: Improving prediction of the minority class in boosting,” in European conference on principles of data mining and knowledge discovery. Springer, 2003, pp. 107–119  
 > [2] S. Wang and X. Yao, “Diversity analysis on imbalanced data sets by using ensemble models,” in 2009 IEEE Symposium on Computational Intelligence and Data Mining. IEEE, 2009, pp. 324–331.  

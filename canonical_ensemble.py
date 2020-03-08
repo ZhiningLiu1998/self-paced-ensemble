@@ -2,7 +2,7 @@
 """
 Created on Sun Jan 13 14:32:27 2019
 @author: v-zhinli
-mailto: v-zhinli@microsoft.com / zhining.liu@outlook.com
+mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
 """
 
 """

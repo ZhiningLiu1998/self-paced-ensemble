@@ -2,7 +2,7 @@
 """
 Created on Tue May 15 16:22:56 2019
 @author: Zhining Liu
-mailto: v-zhinli@microsoft.com / zhining.liu@outlook.com
+mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
 """
 
 from sklearn.metrics import (
