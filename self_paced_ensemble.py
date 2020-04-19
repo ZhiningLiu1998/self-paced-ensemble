@@ -6,6 +6,7 @@ mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
 """
 
 import numpy as np
+import scipy.sparse as sp
 import sklearn
 from sklearn.tree import DecisionTreeClassifier
 import warnings
@@ -154,8 +155,12 @@ class SelfPacedEnsemble():
                     sampled_bins.append(bins[i_bins][idx])
             X_train_maj = np.concatenate(sampled_bins, axis=0)
             y_train_maj = np.full(X_train_maj.shape[0], y_maj[0])
-            X_train = np.concatenate([X_train_maj, X_min])
-            y_train = np.concatenate([y_train_maj, y_min])
+            # Handle sparse matrix
+            if sp.issparse(X_min):
+                X_train = sp.vstack([sp.csr_matrix(X_train_maj), X_min])
+            else:
+                X_train = np.vstack([X_train_maj, X_min])
+            y_train = np.hstack([y_train_maj, y_min])
 
         return X_train, y_train
 
