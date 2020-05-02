@@ -2,7 +2,18 @@
 
 **Self-paced Ensemble (SPE) is a general learning framework for massive highly imbalanced classification.**
 
-SPE performs strictly balanced under-sampling in each iteration and is therefore very computationally efficient. In addition, SPE does not rely on calculating the distance between samples to perform resampling. It can be easily applied to datasets that lack well-defined distance metrics (e.g. with categorical features / missing values) without any modification. Compared to existing imbalance learning methods, SPE works particularly well on datasets that are large-scale, noisy, and highly imbalanced (e.g. with imbalance ratio greater than 100:1). Such kind of data widely exists in real-world industrial applications.
+This is the implementation for the paper [**"Self-paced Ensemble for Highly Imbalanced Massive Data Classification"**](https://conferences.computer.org/icde/2020/pdfs/ICDE2020-5acyuqhpJ6L9P042wmjY1p/290300a841/290300a841.pdf) (ICDE 2020 Research Paper). If you find this repository useful, please cite our work:
+
+```
+@inproceedings{
+    liu2020self-paced-ensemble,
+    title={Self-paced Ensemble for Highly Imbalanced Massive Data Classification},
+    author={Liu, Zhining and Cao, Wei and Gao, Zhifeng and Bian, Jiang and Chen, Hechang and Chang, Yi and Liu, Tie-Yan},
+    booktitle={2020 IEEE 36th International Conference on Data Engineering (ICDE)},
+    year={2020},
+    organization={IEEE}
+}
+```
 
 **This repository contains:**
 - Implementation of Self-paced Ensemble
@@ -16,23 +27,6 @@ SPE performs strictly balanced under-sampling in each iteration and is therefore
 - Additional experimental results
 
 **NOTE:** The implementations of [1],[3] and resampling methods are based on [imbalanced-algorithms](https://github.com/dialnd/imbalanced-algorithms) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
-
-
-This is the implementation for the paper "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020, Research Paper): https://arxiv.org/abs/1909.03500
-
-If you find this repository useful, please cite our work:
-
-```
-@inproceedings{
-    liu2020self-paced-ensemble,
-    title={Self-paced Ensemble for Highly Imbalanced Massive Data Classification},
-    author={Liu, Zhining and Cao, Wei and Gao, Zhifeng and Bian, Jiang and Chen, Hechang and Chang, Yi and Liu, Tie-Yan},
-    booktitle={2020 IEEE 36th International Conference on Data Engineering (ICDE)},
-    year={2020},
-    organization={IEEE}
-}
-```
-
 
 # Table of Contents
 
@@ -52,7 +46,7 @@ If you find this repository useful, please cite our work:
 
 # Background
 
-The rising big data era has been witnessing more classification tasks with largescale but extremely imbalance and low-quality datasets. Most of existing learning methods suffer from poor performance or low computation efficiency under such a scenario. To tackle this problem, we conduct deep investigations into the nature of class imbalance, which reveals that not only the disproportion between classes, but also other difficulties embedded in the nature of data, especially, noises and class overlapping, prevent us from learning effective classifiers. Taking those factors into consideration, we propose a novel framework for imbalance classification that aims to generate a strong ensemble by self-paced harmonizing data hardness via under-sampling. Extensive experiments have shown that this new framework, while being very computationally efficient, can lead to robust performance even under highly overlapping classes and extremely skewed distribution. Note that, our methods can be easily adapted to most of existing learning methods (e.g., C4.5, SVM, GBDT and Neural Network) to boost their performance on imbalanced data. The figure below gives an overview of the SPE framework.
+SPE performs strictly balanced under-sampling in each iteration and is therefore very *computationally efficient*. In addition, SPE does not rely on calculating the distance between samples to perform resampling. It can be easily applied to datasets that lack well-defined distance metrics (e.g. with categorical features / missing values) without any modification. Moreover, as a *generic ensemble framework*, our methods can be easily adapted to most of the existing learning methods (e.g., C4.5, SVM, GBDT, and Neural Network) to boost their performance on imbalanced data. Compared to existing imbalance learning methods, *SPE works particularly well on datasets that are large-scale, noisy, and highly imbalanced (e.g. with imbalance ratio greater than 100:1).* Such kind of data widely exists in real-world industrial applications. The figure below gives an overview of the SPE framework.
 
 ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/framework.png)
 
@@ -63,6 +57,7 @@ Our SPE implementation requires following dependencies:
 - [numpy](https://numpy.org/) (>=1.11)
 - [scipy](https://www.scipy.org/) (>=0.17)
 - [scikit-learn](https://scikit-learn.org/stable/) (>=0.21)
+- [imblearn](https://pypi.org/project/imblearn/) (>=0.0) (optional, for canonical resampling)
 
 Currently you can install SPE by clone this repository. We'll release SPE on the PyPI in the future.
 
