@@ -1,8 +1,13 @@
 # Self-paced Ensmeble
 
+![SPE](https://img.shields.io/badge/ZhiningLiu1998-SPE-orange)
+![Stars](https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble)
+![Forks](https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble)
+![Issues](https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble)
+
 **Self-paced Ensemble (SPE) is a general learning framework for massive highly imbalanced classification.**
 
-This is the implementation for the paper [**"Self-paced Ensemble for Highly Imbalanced Massive Data Classification"**](https://conferences.computer.org/icde/2020/pdfs/ICDE2020-5acyuqhpJ6L9P042wmjY1p/290300a841/290300a841.pdf) (ICDE 2020 Research Paper). If you find this repository useful, please cite our work:
+This is the official implementation for the paper [**"Self-paced Ensemble for Highly Imbalanced Massive Data Classification"**](https://conferences.computer.org/icde/2020/pdfs/ICDE2020-5acyuqhpJ6L9P042wmjY1p/290300a841/290300a841.pdf) (ICDE 2020 Research Paper). If you find this repository useful, please cite our work:
 
 ```
 @inproceedings{
@@ -10,6 +15,7 @@ This is the implementation for the paper [**"Self-paced Ensemble for Highly Imba
     title={Self-paced Ensemble for Highly Imbalanced Massive Data Classification},
     author={Liu, Zhining and Cao, Wei and Gao, Zhifeng and Bian, Jiang and Chen, Hechang and Chang, Yi and Liu, Tie-Yan},
     booktitle={2020 IEEE 36th International Conference on Data Engineering (ICDE)},
+    pages={841--852},
     year={2020},
     organization={IEEE}
 }
