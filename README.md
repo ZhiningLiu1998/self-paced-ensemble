@@ -105,13 +105,13 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 ## Examples
 
 **A minimal example**
-```
+```python
 X, y = <data_loader>.load_data()
 spe = SelfPacedEnsemble().fit(X, y)
 ```
 
 **A non-minimal working example** (It demonstrates some of the features of SPE)
-```
+```python
 import numpy as np
 from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
