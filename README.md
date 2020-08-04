@@ -1,4 +1,4 @@
-# Self-paced Ensmeble
+# Self-paced Ensemble
 
 ![SPE](https://img.shields.io/badge/ZhiningLiu1998-SPE-orange)
 ![Stars](https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble)
@@ -36,7 +36,7 @@ This is the official implementation for the paper [**"Self-paced Ensemble for Hi
 
 # Table of Contents
 
-- [Self-paced Ensmeble](#self-paced-ensmeble)
+- [Self-paced Ensemble](#self-paced-ensemble)
 - [Table of Contents](#table-of-contents)
 - [Background](#background)
 - [Install](#install)
