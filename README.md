@@ -1,13 +1,19 @@
-# Self-paced Ensemble
+<h1 align="center"> Self-paced Ensemble </h1>
 
-![SPE](https://img.shields.io/badge/ZhiningLiu1998-SPE-orange)
-![Stars](https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble)
-![Forks](https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble)
-![Issues](https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble)
+<p align="center">
+  <img src="https://img.shields.io/badge/ZhiningLiu1998-SPE-orange">
+  <img src="https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble">
+  <img src="https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble">
+  <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
+</p>
 
-**Self-paced Ensemble (SPE) is a general learning framework for massive highly imbalanced classification.**
+<h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).  </h4>
 
-This is the official implementation for the paper [**"Self-paced Ensemble for Highly Imbalanced Massive Data Classification"**](https://conferences.computer.org/icde/2020/pdfs/ICDE2020-5acyuqhpJ6L9P042wmjY1p/290300a841/290300a841.pdf) (ICDE 2020 Research Paper). If you find this repository useful, please cite our work:
+**Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly imbalanced classification. It is an easy-to-use solution to class-imbalanced problems, features outstanding computing efficiency, good performance, and wide compatibility with different learning models.**
+
+# Cite Us
+
+**If you find this repository/work helpful, please cite our work:**
 
 ```
 @inproceedings{
@@ -21,32 +27,16 @@ This is the official implementation for the paper [**"Self-paced Ensemble for Hi
 }
 ```
 
-**This repository contains:**
-- Implementation of Self-paced Ensemble
-- Implementation of 5 ensemble-based imbalance learning baselines
-  - `SMOTEBoost` [1]
-  - `SMOTEBagging` [2]
-  - `RUSBoost` [3]
-  - `UnderBagging` [4]
-  - `BalanceCascade` [5]
-- Implementation of 15 resampling based imbalance learning baselines
-- Additional experimental results
-
-**NOTE:** The implementations of [1],[3] and resampling methods are based on [imbalanced-algorithms](https://github.com/dialnd/imbalanced-algorithms) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
-
 # Table of Contents
 
-- [Self-paced Ensemble](#self-paced-ensemble)
-- [Table of Contents](#table-of-contents)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
   - [Documentation](#documentation)
   - [Examples](#examples)
   - [Conducting comparative experiments](#conducting-comparative-experiments)
-- [Experimental results](#experimental-results)
-  - [Results on small datasets](#results-on-small-datasets)
-  - [Results on large-scale datasets](#results-on-large-scale-datasets)
+- [Results](#results)
+- [Miscellaneous](#miscellaneous)
 - [References](#references)
 
 
@@ -162,43 +152,52 @@ MCC     mean:0.868  std:0.007
 | `--runs` | *integer, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
 
 
-# Experimental results
-
-## Results on small datasets
-
-We introduce seven small datasets to validate our method SPE. Their properties vary widely from one another, with IR ranging from 9.1:1 to 111:1, dataset sizes ranging from 360 to 145,751, and feature numbers ranging from 6 to 617. See the table below for more information about these datasets.
-
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets.png)
-
-SPE was compared with other 5 ensemble-based imbalance learning methods:  
-Over-sampling-based ensemble:  `SMOTEBoost`, `SMOTEBagging`  
-Under-sampling-based ensemble: `RUSBoost`, `UnderBagging`, `Cascade`  
-We use Decision Tree as the base classifier for all ensemble methods as other classifiers such as KNN do not support Boosting-based methods. We implemented SPE with Absolute Error as the hardness function and set k=10. In each dataset, 80% samples were used for training. The rest 20% was used as the test set. All the experimental results were reported on the test set (mean and standard deviation of 50 independent runs with different random seeds for training base classifiers). 
-
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets_results.png)
-
-## Results on large-scale datasets
+# Results
 
 Dataset links:
 [Credit Fraud](https://www.kaggle.com/mlg-ulb/creditcardfraud), 
 [KDDCUP](https://archive.ics.uci.edu/ml/datasets/kdd+cup+1999+data), 
 [Record Linkage](https://archive.ics.uci.edu/ml/datasets/Record+Linkage+Comparison+Patterns), 
-[Payment Simulation](https://www.kaggle.com/ntnu-testimon/paysim1).
+[Payment Simulation](https://www.kaggle.com/ntnu-testimon/paysim1).  
+
+<!-- ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets.png)
+
+![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets_results.png) -->
 
 ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/statistics.png)  
 
-------
 Comparisons of SPE with traditional resampling/ensemble methods in terms of performance & computational efficiency.
 
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results.png)
+<!-- ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results.png) -->
+
 ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_resampling.png)
+
 ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_ensemble.png)
+
 ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_ensemble_curve.png)
+
+# Miscellaneous
+
+**This repository contains:**
+- Implementation of Self-paced Ensemble
+- Implementation of 5 ensemble-based imbalance learning baselines
+  - `SMOTEBoost` [1]
+  - `SMOTEBagging` [2]
+  - `RUSBoost` [3]
+  - `UnderBagging` [4]
+  - `BalanceCascade` [5]
+- Implementation of resampling based imbalance learning baselines [6]
+- Additional experimental results
+
+**NOTE:** The implementations of [1],[3] and resampling methods are based on [imbalanced-algorithms](https://github.com/dialnd/imbalanced-algorithms) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
 
 # References
 
-> [1] N. V. Chawla, A. Lazarevic, L. O. Hall, and K. W. Bowyer, “Smoteboost: Improving prediction of the minority class in boosting,” in European conference on principles of data mining and knowledge discovery. Springer, 2003, pp. 107–119  
-> [2] S. Wang and X. Yao, “Diversity analysis on imbalanced data sets by using ensemble models,” in 2009 IEEE Symposium on Computational Intelligence and Data Mining. IEEE, 2009, pp. 324–331.  
-> [3] C. Seiffert, T. M. Khoshgoftaar, J. Van Hulse, and A. Napolitano, “Rusboost: A hybrid approach to alleviating class imbalance,” IEEE Transactions on Systems, Man, and Cybernetics-Part A: Systems and Humans, vol. 40, no. 1, pp. 185–197, 2010.  
-> [4] R. Barandela, R. M. Valdovinos, and J. S. Sanchez, “New applications´ of ensembles of classifiers,” Pattern Analysis & Applications, vol. 6, no. 3, pp. 245–256, 2003.  
-> [5] X.-Y. Liu, J. Wu, and Z.-H. Zhou, “Exploratory undersampling for class-imbalance learning,” IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics), vol. 39, no. 2, pp. 539–550, 2009.  
+| #   | Reference |
+|-----|-------|
+| [1] | N. V. Chawla, A. Lazarevic, L. O. Hall, and K. W. Bowyer, Smoteboost: Improving prediction of the minority class in boosting. in European conference on principles of data mining and knowledge discovery. Springer, 2003, pp. 107–119|
+| [2] | S. Wang and X. Yao, Diversity analysis on imbalanced data sets by using ensemble models. in 2009 IEEE Symposium on Computational Intelligence and Data Mining. IEEE, 2009, pp. 324–331.|
+| [3] | C. Seiffert, T. M. Khoshgoftaar, J. Van Hulse, and A. Napolitano, “Rusboost: A hybrid approach to alleviating class imbalance,” IEEE Transactions on Systems, Man, and Cybernetics-Part A: Systems and Humans, vol. 40, no. 1, pp. 185–197, 2010.|
+| [4] | R. Barandela, R. M. Valdovinos, and J. S. Sanchez, “New applications´ of ensembles of classifiers,” Pattern Analysis & Applications, vol. 6, no. 3, pp. 245–256, 2003.|
+| [5] | X.-Y. Liu, J. Wu, and Z.-H. Zhou, “Exploratory undersampling for class-imbalance learning,” IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics), vol. 39, no. 2, pp. 539–550, 2009.|
+| [6] | Guillaume Lemaître, Fernando Nogueira, and Christos K. Aridas. Imbalanced-learn: A python toolbox to tackle the curse of imbalanced datasets in machine learning. Journal of Machine Learning Research, 18(17):1–5, 2017.|
