@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
 </p>
 
-<h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).  </h4>
+<h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020). [<a href="https://arxiv.org/abs/1909.03500">arXiv</a>] </h4>
 
 **Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly imbalanced classification. It is an easy-to-use solution to class-imbalanced problems, features outstanding computing efficiency, good performance, and wide compatibility with different learning models.**
 
@@ -29,6 +29,8 @@
 
 # Table of Contents
 
+- [Cite Us](#cite-us)
+- [Table of Contents](#table-of-contents)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
