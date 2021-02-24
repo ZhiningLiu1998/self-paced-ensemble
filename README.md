@@ -111,7 +111,7 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 ...                         n_informative=3, n_redundant=0,
 ...                         n_classes=2, random_state=0, 
 ...                         shuffle=False)
->>> clf = SelfPacedEnsemble(
+>>> clf = SelfPacedEnsembleClassifier(
 ...         base_estimator=DecisionTreeClassifier(), 
 ...         n_estimators=10,
 ...         verbose=1).fit(X, y)
@@ -123,7 +123,7 @@ array([1])
 ```python
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
-from self_paced_ensemble import SelfPacedEnsemble
+from self_paced_ensemble import SelfPacedEnsembleClassifier
 from utils import (
   make_binary_classification_target, 
   imbalance_train_test_split,
@@ -137,7 +137,7 @@ def absolute_error(y_true, y_pred):
     return np.absolute(y_true - y_pred)
 
 # ensemble training
-spe = SelfPacedEnsemble(
+spe = SelfPacedEnsembleClassifier(
     base_estimator=DecisionTreeClassifier(),
     hardness_func=absolute_error,
     n_estimators=10,

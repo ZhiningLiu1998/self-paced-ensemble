@@ -3,26 +3,128 @@
 Created on Tue May 14 14:32:27 2019
 @author: ZhiningLiu1998
 mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
+
+A self-paced Ensemble (SPE) Classifier for binary class-imbalanced learning.
+    
+Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly 
+imbalanced classification. It is an easy-to-use solution to class-imbalanced 
+problems, features outstanding computing efficiency, good performance, and wide 
+compatibility with different learning models.
 """
 
 # %%
 
+# import packages
+import os
+import time
+from tqdm import tqdm
+import warnings
+warnings.filterwarnings("ignore")
+
 import numpy as np
 import scipy.sparse as sp
+from collections import Counter
+
 import sklearn
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import BaseEnsemble
 from sklearn.utils.validation import check_random_state, check_is_fitted, column_or_1d, check_array
 from sklearn.utils.multiclass import check_classification_targets
-from collections import Counter
-from base import _partition_estimators, delayed, _parallel_predict_proba
-from joblib import Parallel
-from tqdm import tqdm
-import time
-import warnings
-warnings.filterwarnings("ignore")
 
-class SelfPacedEnsemble(BaseEnsemble):
+from joblib import Parallel, effective_n_jobs
+import functools
+from functools import update_wrapper
+from contextlib import contextmanager as contextmanager
+
+_global_config = {
+    'assume_finite': bool(os.environ.get('SKLEARN_ASSUME_FINITE', False)),
+    'working_memory': int(os.environ.get('SKLEARN_WORKING_MEMORY', 1024)),
+    'print_changed_only': True,
+    'display': 'text',
+}
+
+def get_config():
+    return _global_config.copy()
+
+def set_config(assume_finite=None, working_memory=None,
+               print_changed_only=None, display=None):
+    if assume_finite is not None:
+        _global_config['assume_finite'] = assume_finite
+    if working_memory is not None:
+        _global_config['working_memory'] = working_memory
+    if print_changed_only is not None:
+        _global_config['print_changed_only'] = print_changed_only
+    if display is not None:
+        _global_config['display'] = display
+
+@contextmanager
+def config_context(**new_config):
+    old_config = get_config().copy()
+    set_config(**new_config)
+
+    try:
+        yield
+    finally:
+        set_config(**old_config)
+
+def _parallel_predict_proba(estimators, estimators_features, X, n_classes):
+    """Private function used to compute (proba-)predictions within a job."""
+    n_samples = X.shape[0]
+    proba = np.zeros((n_samples, n_classes))
+
+    for estimator, features in zip(estimators, estimators_features):
+        if hasattr(estimator, "predict_proba"):
+            proba_estimator = estimator.predict_proba(X[:, features])
+
+            if n_classes == len(estimator.classes_):
+                proba += proba_estimator
+
+            else:
+                proba[:, estimator.classes_] += \
+                    proba_estimator[:, range(len(estimator.classes_))]
+
+        else:
+            # Resort to voting
+            predictions = estimator.predict(X[:, features])
+
+            for i in range(n_samples):
+                proba[i, predictions[i]] += 1
+
+    return proba
+
+def delayed(function):
+    """Decorator used to capture the arguments of a function."""
+    @functools.wraps(function)
+    def delayed_function(*args, **kwargs):
+        return _FuncWrapper(function), args, kwargs
+    return delayed_function
+
+class _FuncWrapper:
+    """"Load the global configuration before calling the function."""
+    def __init__(self, function):
+        self.function = function
+        self.config = get_config()
+        update_wrapper(self, self.function)
+
+    def __call__(self, *args, **kwargs):
+        with config_context(**self.config):
+            return self.function(*args, **kwargs)
+
+def _partition_estimators(n_estimators, n_jobs):
+    """Private function used to partition estimators between jobs."""
+    # Compute the number of jobs
+    n_jobs = min(effective_n_jobs(n_jobs), n_estimators)
+
+    # Partition estimators between jobs
+    n_estimators_per_job = np.full(n_jobs, n_estimators // n_jobs,
+                                   dtype=int)
+    n_estimators_per_job[:n_estimators % n_jobs] += 1
+    starts = np.cumsum(n_estimators_per_job)
+
+    return n_jobs, n_estimators_per_job.tolist(), [0] + starts.tolist()
+
+
+class SelfPacedEnsembleClassifier(BaseEnsemble):
     """A self-paced Ensemble (SPE) Classifier for binary class-imbalanced learning.
     
     Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly 
@@ -87,7 +189,7 @@ class SelfPacedEnsemble(BaseEnsemble):
     ...                         n_informative=3, n_redundant=0,
     ...                         n_classes=2, random_state=0, 
     ...                         shuffle=False)
-    >>> clf = SelfPacedEnsemble(
+    >>> clf = SelfPacedEnsembleClassifier(
     ...         base_estimator=DecisionTreeClassifier(), 
     ...         n_estimators=50,
     ...         verbose=1).fit(X, y)
@@ -425,13 +527,13 @@ if __name__ == '__main__':
 
     from sklearn.tree import DecisionTreeClassifier
     from sklearn.metrics import average_precision_score
-    from utils import load_covtype_dataset
+    from .utils.utils import load_covtype_dataset
 
     # load dataset
     X_train, X_test, y_train, y_test = load_covtype_dataset(subset=0.1, random_state=42)
 
     # ensemble training
-    clf = SelfPacedEnsemble(
+    clf = SelfPacedEnsembleClassifier(
         base_estimator=DecisionTreeClassifier(), 
         n_estimators=10,
         verbose=1,

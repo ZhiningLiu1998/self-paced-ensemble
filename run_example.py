@@ -1,7 +1,6 @@
 """
 In this python script we provided an example of how to use our 
 implementation of ensemble methods to perform classification.
-
 Usage:
 ```
 python run_example.py --method=SPEnsemble --n_estimators=10 --runs=10
@@ -10,7 +9,6 @@ or with shortopts:
 ```
 python run_example.py -m SPEnsemble -n 10 -r 10
 ```
-
 run arguments:
     -m / --methods: string
     |   Specify which method were used to build the ensemble classifier.
@@ -19,7 +17,6 @@ run arguments:
     |   Specify how much base estimators were used in the ensemble.
     -r / --runs: integer
     |   Specify the number of independent runs (to obtain mean and std)
-
 """
 
 import time
@@ -29,9 +26,9 @@ import sklearn
 import warnings
 warnings.filterwarnings("ignore")
 
-from self_paced_ensemble import SelfPacedEnsemble
-from canonical_ensemble import *
-from utils import *
+from self_paced_ensemble import SelfPacedEnsembleClassifier
+from self_paced_ensemble.canonical_ensemble import *
+from self_paced_ensemble.utils import *
 import argparse
 from tqdm import trange
 
@@ -53,17 +50,17 @@ def parse():
 def init_model(method, base_estimator, n_estimators):
     '''return a model specified by "method".'''
     if method == 'SPEnsemble':
-        model = SelfPacedEnsemble(base_estimator = base_estimator, n_estimators = n_estimators)
+        model = SelfPacedEnsembleClassifier(base_estimator = base_estimator, n_estimators = n_estimators)
     elif method == 'SMOTEBoost':
-        model = SMOTEBoost(base_estimator = base_estimator, n_estimators = n_estimators)
+        model = SMOTEBoostClassifier(base_estimator = base_estimator, n_estimators = n_estimators)
     elif method == 'SMOTEBagging':
-        model = SMOTEBagging(base_estimator = base_estimator, n_estimators = n_estimators)
+        model = SMOTEBaggingClassifier(base_estimator = base_estimator, n_estimators = n_estimators)
     elif method == 'RUSBoost':
-        model = RUSBoost(base_estimator = base_estimator, n_estimators = n_estimators)
+        model = RUSBoostClassifier(base_estimator = base_estimator, n_estimators = n_estimators)
     elif method == 'UnderBagging':
-        model = UnderBagging(base_estimator = base_estimator, n_estimators = n_estimators)
+        model = UnderBaggingClassifier(base_estimator = base_estimator, n_estimators = n_estimators)
     elif method == 'Cascade':
-        model = BalanceCascade(base_estimator = base_estimator, n_estimators = n_estimators)
+        model = BalanceCascadeClassifier(base_estimator = base_estimator, n_estimators = n_estimators)
     else:
         raise ValueError(f'Do not support method {method}. Only accept \
             \'SPEnsemble\', \'SMOTEBoost\', \'SMOTEBagging\', \'RUSBoost\', \

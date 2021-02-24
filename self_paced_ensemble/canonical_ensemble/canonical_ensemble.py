@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jan 13 14:32:27 2019
-@author: v-zhinli
+@author: Zhining Liu
 mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
-"""
 
-"""
-IMPORTANT!
-The implementation of SMOTE/SMOTEBoost/RUSBoost was obtained from
-imbalanced-algorithms: https://github.com/dialnd/imbalanced-algorithms
+Five ensemble learning algorithms for imbalanced classification, including:
+'SMOTEBaggingClassifier', 'SMOTEBoostClassifier', 'RUSBoostClassifier', 
+'UnderBaggingClassifier', and 'BalanceCascadeClassifier'.
 
-We have to stress that, according to our tests, the performance 
-of our baseline method implementation is FAR SUPERIOR to the 
-implementation in the imblearn package.
-imblearn package: https://github.com/scikit-learn-contrib/imbalanced-learn
+Note: the implementation of SMOTEBoost&RUSBoost was obtained from
+imbalanced-algorithms: https://github.com/dialnd/imbalanced-algorithms.
 """
 
 from collections import Counter
@@ -102,7 +98,7 @@ class SMOTE(object):
 
         return self
 
-class SMOTEBoost(AdaBoostClassifier):
+class SMOTEBoostClassifier(AdaBoostClassifier):
     """Implementation of SMOTEBoost.
     SMOTEBoost introduces data sampling into the AdaBoost algorithm by
     oversampling the minority class using SMOTE on each boosting iteration [1].
@@ -157,7 +153,7 @@ class SMOTEBoost(AdaBoostClassifier):
         self.smote = SMOTE(k_neighbors=k_neighbors,
                            random_state=random_state)
 
-        super(SMOTEBoost, self).__init__(
+        super(SMOTEBoostClassifier, self).__init__(
             base_estimator=base_estimator,
             n_estimators=n_estimators,
             learning_rate=learning_rate,
@@ -371,7 +367,7 @@ class RandomUnderSampler(object):
 
 import pandas as pd
 
-class RUSBoost(AdaBoostClassifier):
+class RUSBoostClassifier(AdaBoostClassifier):
     """Implementation of RUSBoost.
     RUSBoost introduces data sampling into the AdaBoost algorithm by
     undersampling the majority class using random undersampling (with or
@@ -432,7 +428,7 @@ class RUSBoost(AdaBoostClassifier):
                                       return_indices=True,
                                       random_state=random_state)
 
-        super(RUSBoost, self).__init__(
+        super(RUSBoostClassifier, self).__init__(
             base_estimator=base_estimator,
             n_estimators=n_estimators,
             learning_rate=learning_rate,
@@ -612,7 +608,7 @@ import pandas as pd
 from imblearn.over_sampling import SMOTE as SMOTE_IMB
 from sklearn.tree import DecisionTreeClassifier as DT
 
-class SMOTEBagging():
+class SMOTEBaggingClassifier():
     def __init__(self,
                  n_samples=100,
                  min_ratio=1.0,
@@ -662,7 +658,7 @@ class SMOTEBagging():
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier as DT
 
-class UnderBagging():
+class UnderBaggingClassifier():
     def __init__(self,
                  n_samples=100,
                  min_ratio=1.0,
@@ -706,7 +702,7 @@ class UnderBagging():
 
 
 from sklearn.base import clone
-class BalanceCascade():
+class BalanceCascadeClassifier():
     """
     The implementation of BalanceCascade.
     Hyper-parameters:

@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jan 13 14:32:27 2019
-@author: v-zhinli
+@author: Zhining Liu
 mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
+
+A resampling-based classifier for imbalanced classification.
+15 resampling algorithms are included: 
+'RUS', 'CNN', 'ENN', 'NCR', 'Tomek', 'ALLKNN', 'OSS',
+'NM', 'CC', 'SMOTE', 'ADASYN', 'BorderSMOTE', 'SMOTEENN', 
+'SMOTETomek', 'ORG'.
+
+The implementation of these resampling algorithms is based on imblearn python package.
+imblearn url: https://github.com/scikit-learn-contrib/imbalanced-learn
 """
 
 from imblearn.under_sampling import (
@@ -25,12 +34,11 @@ from imblearn.combine import (
 )
 
 from sklearn.tree import DecisionTreeClassifier as DT
-import pandas as pd
 
 class Error(Exception):
     pass
 
-class Resample_classifier(object):
+class ResampleClassifier(object):
     '''
     Re-sampling methods for imbalance classification, based on imblearn python package.
     imblearn url: https://github.com/scikit-learn-contrib/imbalanced-learn
@@ -49,9 +57,9 @@ class Resample_classifier(object):
         '''
         by: String
             The method used to perform re-sampling
-            currently support: ['RUS', 'CNN', 'ENN', 'NCR', 'Tomek', 'ALLKNN', 'OSS',
-                'NM', 'CC', 'SMOTE', 'ADASYN', 'BorderSMOTE', 'SMOTEENN', 'SMOTETomek',
-                'ORG']
+            support: ['RUS', 'CNN', 'ENN', 'NCR', 'Tomek', 'ALLKNN', 'OSS',
+                'NM', 'CC', 'SMOTE', 'ADASYN', 'BorderSMOTE', 'SMOTEENN', 
+                'SMOTETomek', 'ORG']
         '''
         if by == 'RUS':
             sampler = RandomUnderSampler(random_state=random_state)
@@ -90,8 +98,4 @@ class Resample_classifier(object):
             X_train, y_train = sampler.fit_resample(X, y)
         else:
             X_train, y_train = X, y
-        if visualize:
-            df = pd.DataFrame(X_train)
-            df['label'] = y_train
-            df.plot.scatter(x=0, y=1, c='label', s=3, colormap='coolwarm', title='{} training set'.format(by))
         self.base_estimator.fit(X_train, y_train)
