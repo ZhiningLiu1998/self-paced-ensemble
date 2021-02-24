@@ -17,10 +17,10 @@ from collections import Counter
 import numpy as np
 from sklearn.base import is_regressor
 from sklearn.ensemble import AdaBoostClassifier
-from sklearn.ensemble.forest import BaseForest
+from sklearn.ensemble._forest import BaseForest
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import normalize
-from sklearn.tree.tree import BaseDecisionTree
+from sklearn.tree import BaseDecisionTree
 from sklearn.utils import check_random_state
 from sklearn.utils import check_X_y
 from sklearn.utils import check_array
@@ -76,7 +76,7 @@ class SMOTE(object):
             nn_index = np.random.choice(nn[0])
 
             dif = self.X[nn_index] - self.X[j]
-            gap = np.random.random()
+            gap = np.random.rand()
 
             S[i, :] = self.X[j, :] + gap * dif[:]
 

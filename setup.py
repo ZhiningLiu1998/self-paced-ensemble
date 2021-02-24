@@ -14,6 +14,11 @@ from setuptools import find_packages, setup, Command
 
 # %%
 
+# get __version__ from _version.py
+ver_file = os.path.join("self_paced_ensemble", "__version__.py")
+with open(ver_file) as f:
+    exec(f.read())
+
 # Package meta-data.
 NAME = 'self-paced-ensemble'
 DESCRIPTION = 'Self-paced Ensemble for classification on class-imbalanced data.'
@@ -21,7 +26,7 @@ URL = 'https://github.com/ZhiningLiu1998/self-paced-ensemble'
 EMAIL = 'zhining.liu@outlook.com'
 AUTHOR = 'Zhining Liu'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.0'
+VERSION = __version__
 LICENSE = "MIT"
 REQUIRED = [
     "numpy>=1.13.3",

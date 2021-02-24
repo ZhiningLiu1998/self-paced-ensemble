@@ -208,14 +208,13 @@ class SelfPacedEnsembleClassifier(BaseEnsemble):
             verbose = 0,):
 
         self.base_estimator = base_estimator
-        self.estimators_ = []
-        self._hardness_func = hardness_func
+        self.hardness_func = hardness_func
         self.n_estimators = n_estimators
-        self._k_bins = k_bins
+        self.k_bins = k_bins
         self.estimator_params = estimator_params
-        self.verbose = verbose
-        self.random_state = random_state
         self.n_jobs = n_jobs
+        self.random_state = random_state
+        self.verbose = verbose
 
     def _random_under_sampling(self, X_maj, y_maj, X_min, y_min):
         """Private function used to perform random under-sampling."""
@@ -232,22 +231,22 @@ class SelfPacedEnsembleClassifier(BaseEnsemble):
         """Private function used to perform self-paced under-sampling."""
 
         # Update hardness value estimation
-        hardness = self._hardness_func(y_maj, self.y_maj_pred_proba_buffer[:, self.class_index_min])
+        hardness = self.hardness_func(y_maj, self.y_maj_pred_proba_buffer[:, self.class_index_min])
 
         # If hardness values are not distinguishable, perform random smapling
         if hardness.max() == hardness.min():
             X_train, y_train = self._random_under_sampling(X_maj, y_maj, X_min, y_min)
         # Else allocate majority samples into k hardness bins
         else:
-            step = (hardness.max()-hardness.min()) / self._k_bins
+            step = (hardness.max()-hardness.min()) / self.k_bins
             bins = []; ave_contributions = []
-            for i_bins in range(self._k_bins):
+            for i_bins in range(self.k_bins):
                 idx = (
                     (hardness >= i_bins*step + hardness.min()) & 
                     (hardness < (i_bins+1)*step + hardness.min())
                 )
                 # Marginal samples with highest hardness value -> kth bin
-                if i_bins == (self._k_bins-1):
+                if i_bins == (self.k_bins-1):
                     idx = idx | (hardness==hardness.max())
                 bins.append(X_maj[idx])
                 ave_contributions.append(hardness[idx].mean())
@@ -263,7 +262,7 @@ class SelfPacedEnsembleClassifier(BaseEnsemble):
             
             # Perform self-paced under-sampling
             sampled_bins = []
-            for i_bins in range(self._k_bins):
+            for i_bins in range(self.k_bins):
                 if min(len(bins[i_bins]), n_sample_bins[i_bins]) > 0:
                     np.random.seed(self.random_state)
                     idx = np.random.choice(
@@ -521,25 +520,3 @@ class SelfPacedEnsembleClassifier(BaseEnsemble):
         """
         return sklearn.metrics.average_precision_score(
             y, self.predict_proba(X)[:, self.class_index_min])
-
-# test example
-if __name__ == '__main__':
-
-    from sklearn.tree import DecisionTreeClassifier
-    from sklearn.metrics import average_precision_score
-    from .utils.utils import load_covtype_dataset
-
-    # load dataset
-    X_train, X_test, y_train, y_test = load_covtype_dataset(subset=0.1, random_state=42)
-
-    # ensemble training
-    clf = SelfPacedEnsembleClassifier(
-        base_estimator=DecisionTreeClassifier(), 
-        n_estimators=10,
-        verbose=1,
-        ).fit(X_train, y_train, label_maj=0, label_min=1)
-
-    # predict & evaluate
-    y_pred_proba_test = clf.predict_proba(X_test)[:, 1]
-    time.sleep(0.25)
-    print ('\nTest AUPRC score: ', average_precision_score(y_test, y_pred_proba_test))

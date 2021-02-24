@@ -6,6 +6,8 @@
   <img src="https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/badge/license-MIT-green.svg">
+  <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
+  <img src="https://img.shields.io/pypi/pyversions/self-paced-ensemble.svg">
 </p>
 
 <h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
@@ -31,12 +33,35 @@
 }
 ```
 
+# Install
+
+Our SPE implementation requires following dependencies:
+- [python](https://www.python.org/) (>=3.6)
+- [numpy](https://numpy.org/) (>=1.13.3)
+- [scipy](https://www.scipy.org/) (>=0.19.1)
+- [joblib](https://pypi.org/project/joblib/) (>=0.11)
+- [scikit-learn](https://scikit-learn.org/stable/) (>=0.24)
+- [imblearn](https://pypi.org/project/imblearn/) (>=0.7.0)
+
+You can install **SPE** from [PyPI](https://pypi.org/project/self-paced-ensemble/) by running:
+```shell
+$ pip install self-paced-ensemble
+```
+
+
+Or you can install **SPE** by clone this repository:
+```shell
+$ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
+$ cd self-paced-ensemble
+$ python setup.py install
+```
+
 # Table of Contents
 
 - [Cite Us](#cite-us)
+- [Install](#install)
 - [Table of Contents](#table-of-contents)
 - [Background](#background)
-- [Install](#install)
 - [Usage](#usage)
   - [Documentation](#documentation)
   - [Examples](#examples)
@@ -45,27 +70,11 @@
 - [Miscellaneous](#miscellaneous)
 - [References](#references)
 
-
 # Background
 
 SPE performs strictly balanced under-sampling in each iteration and is therefore very *computationally efficient*. In addition, SPE does not rely on calculating the distance between samples to perform resampling. It can be easily applied to datasets that lack well-defined distance metrics (e.g. with categorical features / missing values) without any modification. Moreover, as a *generic ensemble framework*, our methods can be easily adapted to most of the existing learning methods (e.g., C4.5, SVM, GBDT, and Neural Network) to boost their performance on imbalanced data. Compared to existing imbalance learning methods, *SPE works particularly well on datasets that are large-scale, noisy, and highly imbalanced (e.g. with imbalance ratio greater than 100:1).* Such kind of data widely exists in real-world industrial applications. The figure below gives an overview of the SPE framework.
 
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/framework.png)
-
-# Install
-
-Our SPE implementation requires following dependencies:
-- [python](https://www.python.org/) (>=3.5)
-- [numpy](https://numpy.org/) (>=1.11)
-- [scipy](https://www.scipy.org/) (>=0.17)
-- [scikit-learn](https://scikit-learn.org/stable/) (>=0.21)
-- [imblearn](https://pypi.org/project/imblearn/) (>=0.0) (optional, for canonical resampling)
-
-Currently you can install SPE by clone this repository. We'll release SPE on the PyPI in the future.
-
-```
-git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
-```
+![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/framework.png)
 
 # Usage
 
@@ -84,8 +93,6 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 | `random_state`   | *int / RandomState instance / None, optional (default=None)* <br> If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by `numpy.random`. |
 | `verbose`         | *int, default=0* <br> Controls the verbosity when fitting and predicting. |
 
-----------------
-
 | Methods    | Description   |
 | ---------- | ------------- |
 | `fit(self, X, y, label_maj=None, label_min=None)` | Build a self-paced ensemble of estimators from the training set (X, y). <br> `label_maj`/`label_min` specify the label of majority/minority class. <br> By default, we let the minority class be positive class (`label_min=1`). |
@@ -94,7 +101,6 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 | `predict_log_proba(self, X)` | Predict class log-probabilities for X. |
 | `score(self, X, y)` | Returns the average precision score on the given test data and labels. |
 
-----------------
 
 | Attributes    | Description   |
 | ------------- | ------------- |
@@ -125,9 +131,9 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 from self_paced_ensemble import SelfPacedEnsembleClassifier
 from utils import (
-  make_binary_classification_target, 
-  imbalance_train_test_split,
-  load_covtype_dataset)
+    make_binary_classification_target, 
+    imbalance_train_test_split,
+    load_covtype_dataset)
 
 # load dataset
 X_train, X_test, y_train, y_test = load_covtype_dataset(subset=0.1, random_state=42)
@@ -206,21 +212,17 @@ Dataset links:
 [Record Linkage](https://archive.ics.uci.edu/ml/datasets/Record+Linkage+Comparison+Patterns), 
 [Payment Simulation](https://www.kaggle.com/ntnu-testimon/paysim1).  
 
-<!-- ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets.png)
-
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/additional_datasets_results.png) -->
-
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/statistics.png)  
+![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/statistics.png)  
 
 Comparisons of SPE with traditional resampling/ensemble methods in terms of performance & computational efficiency.
 
 <!-- ![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results.png) -->
 
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_resampling.png)
+![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/results_resampling.png)
 
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_ensemble.png)
+![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/results_ensemble.png)
 
-![image](https://github.com/ZhiningLiu1998/figures/blob/master/spe/results_ensemble_curve.png)
+![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/results_ensemble_curve.png)
 
 # Miscellaneous
 

@@ -66,17 +66,17 @@ class ResampleClassifier(object):
         elif by == 'CNN':
             sampler = CondensedNearestNeighbour(random_state=random_state)
         elif by == 'ENN':
-            sampler = EditedNearestNeighbours(random_state=random_state)
+            sampler = EditedNearestNeighbours()
         elif by == 'NCR':
-            sampler = NeighbourhoodCleaningRule(random_state=random_state)
+            sampler = NeighbourhoodCleaningRule()
         elif by == 'Tomek':
-            sampler = TomekLinks(random_state=random_state)
+            sampler = TomekLinks()
         elif by == 'ALLKNN':
-            sampler = AllKNN(random_state=random_state)
+            sampler = AllKNN()
         elif by == 'OSS':
             sampler = OneSidedSelection(random_state=random_state)
         elif by == 'NM':
-            sampler = NearMiss(random_state=random_state)
+            sampler = NearMiss()
         elif by == 'CC':
             sampler = ClusterCentroids(random_state=random_state)
         elif by == 'SMOTE':
