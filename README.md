@@ -5,14 +5,16 @@
   <img src="https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
-  <img src="https://img.shields.io/badge/license-MIT-green.svg">
+  <img src="https://img.shields.io/github/license/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
   <img src="https://img.shields.io/pypi/pyversions/self-paced-ensemble.svg">
 </p>
 
 <h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
+[<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">PDF</a>]
+[<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble_slides.pdf">Slides</a>]
 [<a href="https://arxiv.org/abs/1909.03500v3">arXiv</a>]
-[<a href="http://zhiningliu.com/files/ICDE_self_paced_ensemble.pdf">Slides</a>]
+[<a href="https://pypi.org/project/self-paced-ensemble">PyPI</a>]
 </h4>
 
 **Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly imbalanced classification. It is an easy-to-use solution to class-imbalanced problems, features outstanding computing efficiency, good performance, and wide compatibility with different learning models.**
@@ -43,13 +45,12 @@ Our SPE implementation requires following dependencies:
 - [scikit-learn](https://scikit-learn.org/stable/) (>=0.24)
 - [imblearn](https://pypi.org/project/imblearn/) (>=0.7.0)
 
-You can install **SPE** from [PyPI](https://pypi.org/project/self-paced-ensemble/) by running:
+**You can install SPE from [PyPI](https://pypi.org/project/self-paced-ensemble/) by running:**
 ```shell
 $ pip install self-paced-ensemble
 ```
 
-
-Or you can install **SPE** by clone this repository:
+**Or you can install **SPE** by clone this repository:**
 ```shell
 $ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 $ cd self-paced-ensemble
