@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
-  <img src="https://img.shields.io/github/license/ZhiningLiu1998/self-paced-ensemble">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg">
 </p>
 
 <h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
