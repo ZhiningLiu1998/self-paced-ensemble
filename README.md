@@ -5,6 +5,7 @@
   <img src="https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble">
   <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
+  <img src="https://img.shields.io/github/license/ZhiningLiu1998/self-paced-ensemble">
 </p>
 
 <h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
@@ -76,15 +77,18 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 | ------------- | ------------- |
 | `base_estimator` | *object, optional (default=`sklearn.tree.DecisionTreeClassifier()`)* <br> The base estimator to fit on self-paced under-sampled subsets of the dataset. NO need to support sample weighting. Built-in `fit()`, `predict()`, `predict_proba()` methods are required. |
 | `hardness_func`  | *function, optional (default=`lambda y_true, y_pred: np.absolute(y_true-y_pred)`)* <br> User-specified classification hardness function. <br> Input: `y_true` and `y_pred` Output: `hardness` (1-d array)  |
-| `n_estimator`    | *integer, optional (default=10)* <br> The number of base estimators in the ensemble. |
-| `k_bins`         | *integer, optional (default=10)* <br> The number of hardness bins that were used to approximate hardness distribution. |
-| `random_state`   | *integer / RandomState instance / None, optional (default=None)* <br> If integer, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by `numpy.random`. |
+| `n_estimator`    | *int, optional (default=10)* <br> The number of base estimators in the ensemble. |
+| `k_bins`         | *int, optional (default=10)* <br> The number of hardness bins that were used to approximate hardness distribution. |
+| `estimator_params` | *list of str, default=tuple()* <br> The list of attributes to use as parameters when instantiating a new base estimator. If none are given, default parameters are used. |
+| `n_jobs`         | *int, default=None* <br> The number of jobs to run in parallel for :meth:`predict`. ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context. ``-1`` means using all processors. |
+| `random_state`   | *int / RandomState instance / None, optional (default=None)* <br> If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by `numpy.random`. |
+| `verbose`         | *int, default=0* <br> Controls the verbosity when fitting and predicting. |
 
 ----------------
 
 | Methods    | Description   |
 | ---------- | ------------- |
-| `fit(self, X, y, label_maj=0, label_min=1)` | Build a self-paced ensemble of estimators from the training set (X, y). <br> `label_maj`/`label_min` specify the label of majority/minority class. <br> By default, we let the minority class be positive class (`label_min=1`). |
+| `fit(self, X, y, label_maj=None, label_min=None)` | Build a self-paced ensemble of estimators from the training set (X, y). <br> `label_maj`/`label_min` specify the label of majority/minority class. <br> By default, we let the minority class be positive class (`label_min=1`). |
 | `predict(self, X)` | Predict class for X. |
 | `predict_proba(self, X)` | Predict class probabilities for X. |
 | `predict_log_proba(self, X)` | Predict class log-probabilities for X. |
@@ -101,33 +105,66 @@ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
 
 **A minimal example**
 ```python
-X, y = <data_loader>.load_data()
-spe = SelfPacedEnsemble().fit(X, y)
+>>> from sklearn.tree import DecisionTreeClassifier
+>>> from sklearn.datasets import make_classification
+>>> X, y = make_classification(n_samples=100, n_features=4,
+...                         n_informative=3, n_redundant=0,
+...                         n_classes=2, random_state=0, 
+...                         shuffle=False)
+>>> clf = SelfPacedEnsemble(
+...         base_estimator=DecisionTreeClassifier(), 
+...         n_estimators=10,
+...         verbose=1).fit(X, y)
+>>> clf.predict([[0, 0, 0, 0]])
+array([1])
 ```
 
 **A non-minimal working example** (It demonstrates some of the features of SPE)
 ```python
 import numpy as np
-from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
 from self_paced_ensemble import SelfPacedEnsemble
-from utils import (make_binary_classification_target, imbalance_train_test_split)
+from utils import (
+  make_binary_classification_target, 
+  imbalance_train_test_split,
+  load_covtype_dataset)
 
-X, y = datasets.fetch_covtype(return_X_y=True)
-y = make_binary_classification_target(y, pos_label=7, verbose=True)
-X_train, X_test, y_train, y_test = imbalance_train_test_split(X, y, test_size=0.2)
+# load dataset
+X_train, X_test, y_train, y_test = load_covtype_dataset(subset=0.1, random_state=42)
 
 def absolute_error(y_true, y_pred):
     """Self-defined classification hardness function"""
     return np.absolute(y_true - y_pred)
 
+# ensemble training
 spe = SelfPacedEnsemble(
     base_estimator=DecisionTreeClassifier(),
     hardness_func=absolute_error,
     n_estimators=10,
-    ).fit(X_train, y_train)
+    verbose=1).fit(X_train, y_train, label_maj=0, label_min=1)
 
-print('auc_prc_score: {}'.format(spe.score(X_test, y_test)))
+# predict & evaluate
+y_pred_proba_test = clf.predict_proba(X_test)[:, 1]
+print ('\nTest AUPRC score: ', average_precision_score(y_test, y_pred_proba_test))
+```
+Outputs should be like:
+```
+Dataset used: 		Forest covertypes from UCI (10.0% random subset)
+Positive target:	7
+Imbalance ratio:	27.328
+----------------------------------------------------
+# Samples       : 46480
+# Features      : 54
+# Classes       : 2
+Classes         : 0/1
+Class Dist      : 44840/1640
+Imbalance Ratio : 27.34/1.00
+----------------------------------------------------
+SPE Training: 100%|██████████| 10/10 [00:00<00:00, 23.65it/s]
+[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
+
+Test AUPRC score:  0.9106885803103659
 ```
 
 ## Conducting comparative experiments
@@ -137,11 +174,15 @@ We also provide a simple framework ([*run_example.py*](https://github.com/Zhinin
 ```
 python run_example.py --method=SPEnsemble --n_estimators=10 --runs=10
 ```
-You should expect output console log like this:
+Outputs should be like:
 ```
+Dataset used:           Forest covertypes from UCI (10.0% random subset)
+Positive target:        7
+Imbalance ratio:        27.328
+
 Running method:         SPEnsemble - 10 estimators in 10 independent run(s) ...
-100%|█████████████████████████████████████████| 10/10 [00:14<00:00,  1.42s/it]]
-ave_run_time:           0.686s
+SPEnsemble running: 100%|███████████████████████| 10/10 [00:11<00:00,  1.16s/it]
+ave_run_time:           0.412s
 ------------------------------
 Metrics:
 AUCPRC  mean:0.910  std:0.009
@@ -153,8 +194,8 @@ MCC     mean:0.868  std:0.007
 | Arguments   | Description   |
 | ----------- | ------------- |
 | `--method` | *string, optional (default=`'SPEnsemble'`)* <br> support: `SPEnsemble`, `SMOTEBoost`, `SMOTEBagging`, `RUSBoost`, `UnderBagging`, `Cascade`, `all` <br> When `all`, the script will run all supported methods. |
-| `--n_estimators` | *integer, optional (default=10)* <br> The number of base estimators in the ensemble. |
-| `--runs` | *integer, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
+| `--n_estimators` | *int, optional (default=10)* <br> The number of base estimators in the ensemble. |
+| `--runs` | *int, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
 
 
 # Results

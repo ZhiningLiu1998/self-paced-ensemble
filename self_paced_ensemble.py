@@ -5,25 +5,39 @@ Created on Tue May 14 14:32:27 2019
 mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
 """
 
+# %%
+
 import numpy as np
 import scipy.sparse as sp
 import sklearn
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import BaseEnsemble
+from sklearn.utils.validation import check_random_state, check_is_fitted, column_or_1d, check_array
+from sklearn.utils.multiclass import check_classification_targets
+from collections import Counter
+from base import _partition_estimators, delayed, _parallel_predict_proba
+from joblib import Parallel
+from tqdm import tqdm
+import time
 import warnings
 warnings.filterwarnings("ignore")
 
-class SelfPacedEnsemble():
-    """ Self-paced Ensemble (SPE)
+class SelfPacedEnsemble(BaseEnsemble):
+    """A self-paced Ensemble (SPE) Classifier for binary class-imbalanced learning.
+    
+    Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly 
+    imbalanced classification. It is an easy-to-use solution to class-imbalanced 
+    problems, features outstanding computing efficiency, good performance, and wide 
+    compatibility with different learning models.
 
     Parameters
     ----------
-
     base_estimator : object, optional (default=sklearn.Tree.DecisionTreeClassifier())
         The base estimator to fit on self-paced under-sampled subsets of the dataset. 
         NO need to support sample weighting. 
         Built-in `fit()`, `predict()`, `predict_proba()` methods are required.
 
-    hardness_func :  function, optional 
+    hardness_func : function, optional 
         (default=`lambda y_true, y_pred: np.absolute(y_true-y_pred)`)
         User-specified classification hardness function
             Parameters:
@@ -32,57 +46,53 @@ class SelfPacedEnsemble():
             Returns:
                 hardness: 1-d array-like, shape = [n_samples]
 
-    n_estimators :  integer, optional (default=10)
+    n_estimators : int, optional (default=10)
         The number of base estimators in the ensemble.
 
-    k_bins :        integer, optional (default=10)
+    k_bins : int, optional (default=10)
         The number of hardness bins that were used to approximate hardness distribution.
 
-    random_state :  integer / RandomState instance / None, optional (default=None)
-        If integer, random_state is the seed used by the random number generator; 
+    estimator_params : list of str, default=tuple()
+        The list of attributes to use as parameters when instantiating a
+        new base estimator. If none are given, default parameters are used.
+
+    n_jobs : int, default=None
+        The number of jobs to run in parallel for :meth:`predict`. 
+        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` 
+        context. ``-1`` means using all processors. See 
+        :term:`Glossary <n_jobs>` for more details.
+
+    random_state : int / RandomState instance / None, optional (default=None)
+        If int, random_state is the seed used by the random number generator; 
         If RandomState instance, random_state is the random number generator; 
         If None, the random number generator is the RandomState instance used by 
         `numpy.random`.
 
+    verbose : int, default=0
+        Controls the verbosity when fitting and predicting.
 
     Attributes
     ----------
-
-    base_estimator_ : estimator
+    base_estimator : estimator
         The base estimator from which the ensemble is grown.
 
     estimators_ : list of estimator
         The collection of fitted base estimators.
 
-    Example:
-    ```
-    import numpy as np
-    from sklearn import datasets
-    from sklearn.tree import DecisionTreeClassifier
-    from self_paced_ensemble import SelfPacedEnsemble
-    from utils import make_binary_classification_target, imbalance_train_test_split
-
-    X, y = datasets.fetch_covtype(return_X_y=True)
-    y = make_binary_classification_target(y, 7, True)
-    X_train, X_test, y_train, y_test = imbalance_train_test_split(
-            X, y, test_size=0.2, random_state=42)
-
-    def absolute_error(y_true, y_pred):
-        # Self-defined classification hardness function
-        return np.absolute(y_true - y_pred)
-
-    spe = SelfPacedEnsemble(
-        base_estimator=DecisionTreeClassifier(),
-        hardness_func=absolute_error,
-        n_estimators=10,
-        k_bins=10,
-        random_state=42,
-    ).fit(
-        X=X_train,
-        y=y_train,
-    )
-    print('auc_prc_score: {}'.format(spe.score(X_test, y_test)))
-    ```
+    Examples
+    --------
+    >>> from sklearn.tree import DecisionTreeClassifier
+    >>> from sklearn.datasets import make_classification
+    >>> X, y = make_classification(n_samples=100, n_features=4,
+    ...                         n_informative=3, n_redundant=0,
+    ...                         n_classes=2, random_state=0, 
+    ...                         shuffle=False)
+    >>> clf = SelfPacedEnsemble(
+    ...         base_estimator=DecisionTreeClassifier(), 
+    ...         n_estimators=50,
+    ...         verbose=1).fit(X, y)
+    >>> clf.predict([[0, 0, 0, 0]])
+    array([1])
 
     """
     def __init__(self, 
@@ -90,31 +100,37 @@ class SelfPacedEnsemble():
             hardness_func=lambda y_true, y_pred: np.absolute(y_true-y_pred),
             n_estimators=10, 
             k_bins=10, 
-            random_state=None):
-        self.base_estimator_ = base_estimator
+            estimator_params = tuple(),
+            n_jobs = None,
+            random_state = None,
+            verbose = 0,):
+
+        self.base_estimator = base_estimator
         self.estimators_ = []
         self._hardness_func = hardness_func
-        self._n_estimators = n_estimators
+        self.n_estimators = n_estimators
         self._k_bins = k_bins
-        self._random_state = random_state
-
-    def _fit_base_estimator(self, X, y):
-        """Private function used to train a single base estimator."""
-        return sklearn.base.clone(self.base_estimator_).fit(X, y)
+        self.estimator_params = estimator_params
+        self.verbose = verbose
+        self.random_state = random_state
+        self.n_jobs = n_jobs
 
     def _random_under_sampling(self, X_maj, y_maj, X_min, y_min):
         """Private function used to perform random under-sampling."""
-        np.random.seed(self._random_state)
+
+        np.random.seed(self.random_state)
         idx = np.random.choice(len(X_maj), len(X_min), replace=False)
         X_train = np.concatenate([X_maj[idx], X_min])
         y_train = np.concatenate([y_maj[idx], y_min])
+
         return X_train, y_train
 
     def _self_paced_under_sampling(self, 
             X_maj, y_maj, X_min, y_min, i_estimator):
         """Private function used to perform self-paced under-sampling."""
+
         # Update hardness value estimation
-        hardness = self._hardness_func(y_maj, self._y_pred_maj)
+        hardness = self._hardness_func(y_maj, self.y_maj_pred_proba_buffer[:, self.class_index_min])
 
         # If hardness values are not distinguishable, perform random smapling
         if hardness.max() == hardness.min():
@@ -135,7 +151,7 @@ class SelfPacedEnsemble():
                 ave_contributions.append(hardness[idx].mean())
 
             # Update self-paced factor alpha
-            alpha = np.tan(np.pi*0.5*(i_estimator/(self._n_estimators-1)))
+            alpha = np.tan(np.pi*0.5*(i_estimator/(self.n_estimators-1)))
             # Caculate sampling weight
             weights = 1 / (ave_contributions + alpha)
             weights[np.isnan(weights)] = 0
@@ -147,7 +163,7 @@ class SelfPacedEnsemble():
             sampled_bins = []
             for i_bins in range(self._k_bins):
                 if min(len(bins[i_bins]), n_sample_bins[i_bins]) > 0:
-                    np.random.seed(self._random_state)
+                    np.random.seed(self.random_state)
                     idx = np.random.choice(
                         len(bins[i_bins]), 
                         min(len(bins[i_bins]), n_sample_bins[i_bins]), 
@@ -155,6 +171,7 @@ class SelfPacedEnsemble():
                     sampled_bins.append(bins[i_bins][idx])
             X_train_maj = np.concatenate(sampled_bins, axis=0)
             y_train_maj = np.full(X_train_maj.shape[0], y_maj[0])
+
             # Handle sparse matrix
             if sp.issparse(X_min):
                 X_train = sp.vstack([sp.csr_matrix(X_train_maj), X_min])
@@ -163,8 +180,88 @@ class SelfPacedEnsemble():
             y_train = np.hstack([y_train_maj, y_min])
 
         return X_train, y_train
+        
+    def _validate_y(self, y):
+        """Validate the label vector."""
 
-    def fit(self, X, y, label_maj=0, label_min=1):
+        y = column_or_1d(y, warn=True)
+        check_classification_targets(y)
+
+        return y
+    
+    def update_maj_pred_buffer(self, X_maj):
+        """Maintain a latest prediction probabilities of the majority 
+           training data during ensemble training."""
+
+        if self.n_buffered_estimators_ > len(self.estimators_):
+            raise ValueError(
+                'Number of buffered estimators ({}) > total estimators ({}), check usage!'.format(
+                    self.n_buffered_estimators_, len(self.estimators_)))
+        if self.n_buffered_estimators_ == 0:
+            self.y_maj_pred_proba_buffer = np.full(shape=(self._n_samples_maj, self.n_classes_), fill_value=1./self.n_classes_)
+        y_maj_pred_proba_buffer = self.y_maj_pred_proba_buffer
+        for i in range(self.n_buffered_estimators_, len(self.estimators_)):
+            y_pred_proba_i = self.estimators_[i].predict_proba(X_maj)
+            y_maj_pred_proba_buffer = (y_maj_pred_proba_buffer * i + y_pred_proba_i) / (i+1)
+        self.y_maj_pred_proba_buffer = y_maj_pred_proba_buffer
+        self.n_buffered_estimators_ = len(self.estimators_)
+
+        return
+
+    def init_data_statistics(self, X, y, label_maj, label_min, to_console=False):
+        """Initialize DupleBalance with training data statistics."""
+
+        self._n_samples, self.n_features_ = X.shape
+        self.features_ = np.arange(self.n_features_)
+        self.org_class_distr = Counter(y)
+        self.classes_, y = np.unique(y, return_inverse=True)
+        self.n_classes_ = len(self.classes_)
+        self.n_buffered_estimators_ = 0
+
+        if self.n_classes_ != 2:
+            raise ValueError(f"Number of classes should be 2, meet {self.n_classes_}, please check usage.")
+
+        if label_maj == None or label_min == None:
+            # auto detect majority and minority class label
+            sorted_class_distr = sorted(self.org_class_distr.items(), key=lambda d: d[1])
+            label_min, label_maj = sorted_class_distr[0][0], sorted_class_distr[1][0]
+            if to_console:
+                print (f'\n\'label_maj\' and \'label_min\' are not specified, automatically set to {label_maj} and {label_min}')
+        
+        self.label_maj, self.label_min = label_maj, label_min
+        self.class_index_maj, self.class_index_min = list(self.classes_).index(label_maj), list(self.classes_).index(label_min)
+        maj_index, min_index = (y==label_maj), (y==label_min)
+        self._n_samples_maj, self._n_samples_min = maj_index.sum(), min_index.sum()
+
+        if self._n_samples_maj == 0:
+            raise RuntimeWarning(
+                f'The specified majority class {self.label_maj} has no data samples, please check usage.')
+        if self._n_samples_min == 0:
+            raise RuntimeWarning(
+                f'The specified minority class {self.label_min} has no data samples, please check usage.')
+
+        self.X_maj, self.y_maj = X[maj_index], y[maj_index]
+        self.X_min, self.y_min = X[min_index], y[min_index]
+        if to_console:
+            print ('----------------------------------------------------')
+            print ('# Samples       : {}'.format(self._n_samples))
+            print ('# Features      : {}'.format(self.n_features_))
+            print ('# Classes       : {}'.format(self.n_classes_))
+            cls_label, cls_dis, IRs = '', '', ''
+            min_n_samples = min(self.org_class_distr.values())
+            for label, num in sorted(self.org_class_distr.items(), key=lambda d: d[1], reverse=True):
+                cls_label += f'{label}/'
+                cls_dis += f'{num}/'
+                IRs += '{:.2f}/'.format(num/min_n_samples)
+            print ('Classes         : {}'.format(cls_label[:-1]))
+            print ('Class Dist      : {}'.format(cls_dis[:-1]))
+            print ('Imbalance Ratio : {}'.format(IRs[:-1]))
+            print ('----------------------------------------------------')
+            time.sleep(0.25)
+        
+        return
+
+    def fit(self, X, y, label_maj=None, label_min=None):
         """Build a self-paced ensemble of estimators from the training set (X, y).
 
         Parameters
@@ -176,42 +273,57 @@ class SelfPacedEnsemble():
         y : array-like, shape = [n_samples]
             The target values (class labels).
         
-        label_maj : int, bool or float, optional (default=0)
-            The majority class label, default to be negative class.
+        label_maj : int, optional (default=None)
+            The majority class label, default to be `None`.
+            if None, `label_maj` will be automatically set when call `fit()`.
             
-        label_min : int, bool or float, optional (default=1)
-            The minority class label, default to be positive class.
+        label_min : int, optional (default=None)
+            The minority class label, default to be `None`.
+            if None, `label_min` will be automatically set when call `fit()`.
         
         Returns
         ------
         self : object
         """
-        self.estimators_ = []
-        # Initialize by spliting majority / minority set
-        X_maj = X[y==label_maj]; y_maj = y[y==label_maj]
-        X_min = X[y==label_min]; y_min = y[y==label_min]
+        
+        # validate data format and estimator
+        check_random_state(self.random_state)
+        X, y = self._validate_data(
+            X, y, accept_sparse=['csr', 'csc'], dtype=None,
+            force_all_finite=False, multi_output=True)
+        y = self._validate_y(y)
+        self._validate_estimator()
 
-        # Random under-sampling in the 1st round (cold start)
-        X_train, y_train = self._random_under_sampling(
-            X_maj, y_maj, X_min, y_min)
-        self.estimators_.append(
-            self._fit_base_estimator(
-                X_train, y_train))
-        self._y_pred_maj = self.predict_proba(X_maj)[:, 1]
+        # Initialize by spliting majority / minority set
+        self.init_data_statistics(
+            X, y, label_maj, label_min, 
+            to_console=True if self.verbose > 0 else False)
+        self.estimators_ = []
+        self.estimators_features_ = []
 
         # Loop start
-        for i_estimator in range(1, self._n_estimators):
+        if self.verbose > 0:
+            iterations = tqdm(range(self.n_estimators))
+            iterations.set_description('SPE Training')
+        else:
+            iterations = range(self.n_estimators)
+
+        for i_iter in iterations:
+
+            # update current majority training data prediction
+            self.update_maj_pred_buffer(self.X_maj)
+            
+            # train a new base estimator and add it into self.estimators_
             X_train, y_train = self._self_paced_under_sampling(
-                X_maj, y_maj, X_min, y_min, i_estimator,)
-            self.estimators_.append(
-                self._fit_base_estimator(
-                    X_train, y_train))
-            # update predicted probability
-            n_clf = len(self.estimators_)
-            y_pred_maj_last_clf = self.estimators_[-1].predict_proba(X_maj)[:, 1]
-            self._y_pred_maj = (self._y_pred_maj * (n_clf-1) + y_pred_maj_last_clf) / n_clf
+                self.X_maj, self.y_maj, self.X_min, self.y_min, i_iter)
+            estimator = self._make_estimator(append=True, random_state=self.random_state)
+            estimator.fit(X_train, y_train)
+            self.estimators_features_.append(self.features_)
 
         return self
+    
+    def _parallel_args(self):
+        return {}
 
     def predict_proba(self, X):
         """Predict class probabilities for X.
@@ -234,15 +346,37 @@ class SelfPacedEnsemble():
         p : array of shape = [n_samples, n_classes]
             The class probabilities of the input samples. 
         """
-        y_pred = np.array(
-            [model.predict(X) for model in self.estimators_]
-            ).mean(axis=0)
-        if y_pred.ndim == 1:
-            y_pred = y_pred[:, np.newaxis]
-        if y_pred.shape[1] == 1:
-            y_pred = np.append(1-y_pred, y_pred, axis=1)
-        return y_pred
-    
+
+        check_is_fitted(self)
+        # Check data
+        X = check_array(
+            X, accept_sparse=['csr', 'csc'], dtype=None,
+            force_all_finite=False
+        )
+        if self.n_features_ != X.shape[1]:
+            raise ValueError("Number of features of the model must "
+                             "match the input. Model n_features is {0} and "
+                             "input n_features is {1}."
+                             "".format(self.n_features_, X.shape[1]))
+        
+        # Parallel loop
+        n_jobs, n_estimators, starts = _partition_estimators(self.n_estimators,
+                                                             self.n_jobs)
+
+        all_proba = Parallel(n_jobs=n_jobs, verbose=self.verbose,
+                             **self._parallel_args())(
+            delayed(_parallel_predict_proba)(
+                self.estimators_[starts[i]:starts[i + 1]],
+                self.estimators_features_[starts[i]:starts[i + 1]],
+                X,
+                self.n_classes_)
+            for i in range(n_jobs))
+
+        # Reduce
+        proba = sum(all_proba) / self.n_estimators
+
+        return proba
+
     def predict(self, X):
         """Predict class for X.
 
@@ -252,18 +386,19 @@ class SelfPacedEnsemble():
 
         Parameters
         ----------
-        X : {array-like, sparse matrix} of shape = [n_samples, n_features]
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
             The training input samples. Sparse matrices are accepted only if
             they are supported by the base estimator.
 
         Returns
         -------
-        y : array of shape = [n_samples]
+        y : ndarray of shape (n_samples,)
             The predicted classes.
         """
-        y_pred_binarized = sklearn.preprocessing.binarize(
-            self.predict_proba(X)[:,1].reshape(1,-1), threshold=0.5)[0]
-        return y_pred_binarized
+        
+        predicted_probabilitiy = self.predict_proba(X)
+        return self.classes_.take((np.argmax(predicted_probabilitiy, axis=1)),
+                                  axis=0)
     
     def score(self, X, y):
         """Returns the average precision score (equivalent to the area under 
@@ -283,4 +418,26 @@ class SelfPacedEnsemble():
             Average precision of self.predict_proba(X)[:, 1] wrt. y.
         """
         return sklearn.metrics.average_precision_score(
-            y, self.predict_proba(X)[:, 1])
+            y, self.predict_proba(X)[:, self.class_index_min])
+
+# test example
+if __name__ == '__main__':
+
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.metrics import average_precision_score
+    from utils import load_covtype_dataset
+
+    # load dataset
+    X_train, X_test, y_train, y_test = load_covtype_dataset(subset=0.1, random_state=42)
+
+    # ensemble training
+    clf = SelfPacedEnsemble(
+        base_estimator=DecisionTreeClassifier(), 
+        n_estimators=10,
+        verbose=1,
+        ).fit(X_train, y_train, label_maj=0, label_min=1)
+
+    # predict & evaluate
+    y_pred_proba_test = clf.predict_proba(X_test)[:, 1]
+    time.sleep(0.25)
+    print ('\nTest AUPRC score: ', average_precision_score(y_test, y_pred_proba_test))

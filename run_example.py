@@ -22,7 +22,7 @@ run arguments:
 
 """
 
-from time import clock
+import time
 import pandas as pd
 import numpy as np
 import sklearn
@@ -65,7 +65,9 @@ def init_model(method, base_estimator, n_estimators):
     elif method == 'Cascade':
         model = BalanceCascade(base_estimator = base_estimator, n_estimators = n_estimators)
     else:
-        raise Error('No such method support: {}'.format(method))
+        raise ValueError(f'Do not support method {method}. Only accept \
+            \'SPEnsemble\', \'SMOTEBoost\', \'SMOTEBagging\', \'RUSBoost\', \
+            \'UnderBagging\', \'Cascade\'.')
     return model
 
 def main():
@@ -87,16 +89,17 @@ def main():
         # print('Running ...')
         scores = []; times = []
         try:
-            with trange(runs) as t:
+            with trange(runs, ncols=80) as t:
+                t.set_description(f'{method} running')
                 for _ in t:
                     model = init_model(
                         method=method,
                         n_estimators=n_estimators,
                         base_estimator=sklearn.tree.DecisionTreeClassifier(),
                     )
-                    start_time = clock()
+                    start_time = time.time()
                     model.fit(X_train, y_train)
-                    times.append(clock()-start_time)
+                    times.append(time.time()-start_time)
                     y_pred = model.predict_proba(X_test)[:, 1]
                     scores.append([
                         auc_prc(y_test, y_pred),
@@ -106,8 +109,6 @@ def main():
                     ])
         except KeyboardInterrupt:
             t.close()
-            raise
-        t.close
         
         # Print results to console
         print('ave_run_time:\t\t{:.3f}s'.format(np.mean(times)))
