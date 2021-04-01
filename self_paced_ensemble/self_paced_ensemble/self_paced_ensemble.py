@@ -315,7 +315,7 @@ class SelfPacedEnsembleClassifier(BaseEnsemble):
         self._n_samples, self.n_features_ = X.shape
         self.features_ = np.arange(self.n_features_)
         self.org_class_distr = Counter(y)
-        self.classes_, y = np.unique(y, return_inverse=True)
+        self.classes_ = np.unique(y)
         self.n_classes_ = len(self.classes_)
         self.n_buffered_estimators_ = 0
 
