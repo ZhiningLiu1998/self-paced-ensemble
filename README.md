@@ -1,14 +1,39 @@
-<h1 align="center"> Self-paced Ensemble </h1>
+<!-- <h1 align="center"> Self-paced Ensemble </h1> -->
+
+![](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/spe_header.png)
+================================================================
 
 <p align="center">
-  <img src="https://img.shields.io/badge/ZhiningLiu1998-SPE-orange">
-  <img src="https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble">
-  <img src="https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble">
-  <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
-  <img src="https://img.shields.io/github/license/ZhiningLiu1998/self-paced-ensemble">
-  <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
-  <img src="https://img.shields.io/pypi/pyversions/self-paced-ensemble.svg">
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble">
+    <img src="https://img.shields.io/badge/ZhiningLiu1998-SPE-orange">
+  </a>
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/stargazers">
+    <img src="https://img.shields.io/github/stars/ZhiningLiu1998/self-paced-ensemble">
+  </a>
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/network/members">
+    <img src="https://img.shields.io/github/forks/ZhiningLiu1998/self-paced-ensemble">
+  </a>
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues">
+    <img src="https://img.shields.io/github/issues/ZhiningLiu1998/self-paced-ensemble">
+  </a>
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/ZhiningLiu1998/self-paced-ensemble">
+  </a>
+  <a href="https://pypi.org/project/self-paced-ensemble/">
+    <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
+  </a>
+  <br>
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/pypi/pyversions/self-paced-ensemble.svg">
+  </a>
+  <a href="https://pepy.tech/project/self-paced-ensemble">
+    <img src="https://pepy.tech/badge/self-paced-ensemble">
+  </a>
+  <a href="https://pepy.tech/project/self-paced-ensemble">
+    <img src="https://pepy.tech/badge/self-paced-ensemble/month">
+  </a>
 </p>
+
 
 <h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
 [<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">PDF</a>]
@@ -21,7 +46,7 @@
 
 # Cite Us
 
-**If you find this repository/work helpful, please cite our work:**
+**If you find this repository helpful, please consider citing our work:**
 
 ```
 @inproceedings{
@@ -59,6 +84,7 @@ $ python setup.py install
 
 # Table of Contents
 
+- [!](#)
 - [Cite Us](#cite-us)
 - [Install](#install)
 - [Table of Contents](#table-of-contents)
