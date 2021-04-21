@@ -27,6 +27,7 @@ from collections import Counter
 
 import sklearn
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.base import ClassifierMixin
 from sklearn.ensemble import BaseEnsemble
 from sklearn.utils.validation import check_random_state, check_is_fitted, column_or_1d, check_array
 from sklearn.utils.multiclass import check_classification_targets
@@ -124,7 +125,7 @@ def _partition_estimators(n_estimators, n_jobs):
     return n_jobs, n_estimators_per_job.tolist(), [0] + starts.tolist()
 
 
-class SelfPacedEnsembleClassifier(BaseEnsemble):
+class SelfPacedEnsembleClassifier(BaseEnsemble, ClassifierMixin):
     """A self-paced Ensemble (SPE) Classifier for binary class-imbalanced learning.
     
     Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly 
