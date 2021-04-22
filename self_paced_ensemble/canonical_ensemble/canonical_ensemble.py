@@ -12,11 +12,16 @@ Note: the implementation of SMOTEBoost&RUSBoost was obtained from
 imbalanced-algorithms: https://github.com/dialnd/imbalanced-algorithms.
 """
 
+# %%
+
 from collections import Counter
 
 import numpy as np
 from sklearn.base import is_regressor
+from sklearn.base import ClassifierMixin
+from sklearn.ensemble import BaseEnsemble
 from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import BaggingClassifier
 from sklearn.ensemble._forest import BaseForest
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import normalize
@@ -150,6 +155,7 @@ class SMOTEBoostClassifier(AdaBoostClassifier):
 
         self.n_samples = n_samples
         self.algorithm = algorithm
+        self.k_neighbors = k_neighbors
         self.smote = SMOTE(k_neighbors=k_neighbors,
                            random_state=random_state)
 
@@ -423,6 +429,7 @@ class RUSBoostClassifier(AdaBoostClassifier):
 
         self.n_samples = n_samples
         self.min_ratio = min_ratio
+        self.with_replacement = with_replacement
         self.algorithm = algorithm
         self.rus = RandomUnderSampler(with_replacement=with_replacement,
                                       return_indices=True,
@@ -606,23 +613,25 @@ class RUSBoostClassifier(AdaBoostClassifier):
 
 import pandas as pd
 from imblearn.over_sampling import SMOTE as SMOTE_IMB
-from sklearn.tree import DecisionTreeClassifier as DT
+from sklearn.tree import DecisionTreeClassifier
 
-class SMOTEBaggingClassifier():
+class SMOTEBaggingClassifier(BaggingClassifier):
     def __init__(self,
-                 n_samples=100,
-                 min_ratio=1.0,
-                 with_replacement=True,
-                 base_estimator=None,
+                 base_estimator=DecisionTreeClassifier(),
                  n_estimators=10,
-                 learning_rate=1.,
-                 algorithm='SAMME.R',
                  random_state=None):
-        self.n_estimators = n_estimators
-        self.model_list = []
-    
+
+        super(SMOTEBaggingClassifier, self).__init__(
+            base_estimator=base_estimator,
+            n_estimators=n_estimators,
+            random_state=random_state)
+
     def fit(self, X, y):
-        self.model_list = []
+
+        self._validate_estimator()
+
+        self.estimators_  = []
+
         df = pd.DataFrame(X); df['label'] = y
         df_maj = df[df['label']==0]; n_maj = len(df_maj)
         df_min = df[df['label']==1]; n_min = len(df_min)
@@ -639,12 +648,13 @@ class SMOTEBaggingClassifier():
             X_train, y_train = SMOTE_IMB(k_neighbors=min(5, len(train_min)-1)).fit_resample(df_k[cols], df_k['label'])
             # print ('Bagging Iter: {} |b: {:.1f}|n_train: {}|n_smote: {}'.format(
             #     ibagging, b, len(y_train), len(y_train)-len(df_k)))
-            model = DT().fit(X_train, y_train)
-            self.model_list.append(model)
+            estimator = self._make_estimator(append=True, random_state=self.random_state)
+            estimator.fit(X_train, y_train)
+
         return self
     
     def predict_proba(self, X):
-        y_pred = np.array([model.predict(X) for model in self.model_list]).mean(axis=0)
+        y_pred = np.array([model.predict(X) for model in self.estimators_]).mean(axis=0)
         if y_pred.ndim == 1:
             y_pred = y_pred[:, np.newaxis]
         if y_pred.shape[1] == 1:
@@ -656,23 +666,25 @@ class SMOTEBaggingClassifier():
         return y_pred_binarazed
 
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier as DT
+from sklearn.tree import DecisionTreeClassifier
 
-class UnderBaggingClassifier():
+class UnderBaggingClassifier(BaggingClassifier):
     def __init__(self,
-                 n_samples=100,
-                 min_ratio=1.0,
-                 with_replacement=True,
-                 base_estimator=None,
+                 base_estimator=DecisionTreeClassifier(),
                  n_estimators=10,
-                 learning_rate=1.,
-                 algorithm='SAMME.R',
                  random_state=None):
-        self.n_estimators = n_estimators
-        self.model_list = []
+
+        super(UnderBaggingClassifier, self).__init__(
+            base_estimator=base_estimator,
+            n_estimators=n_estimators,
+            random_state=random_state)
     
     def fit(self, X, y):
-        self.model_list = []
+
+        self._validate_estimator()
+
+        self.estimators_  = []
+
         df = pd.DataFrame(X); df['label'] = y
         df_maj = df[df['label']==0]; n_maj = len(df_maj)
         df_min = df[df['label']==1]; n_min = len(df_min)
@@ -684,12 +696,13 @@ class UnderBaggingClassifier():
             #     ibagging, len(df_maj), len(train_maj), len(train_min)))
             df_k = train_maj.append(train_min)
             X_train, y_train = df_k[cols], df_k['label']
-            model = DT().fit(X_train, y_train)
-            self.model_list.append(model)
+            estimator = self._make_estimator(append=True, random_state=self.random_state)
+            estimator.fit(X_train, y_train)
+
         return self
     
     def predict_proba(self, X):
-        y_pred = np.array([model.predict(X) for model in self.model_list]).mean(axis=0)
+        y_pred = np.array([model.predict(X) for model in self.estimators_]).mean(axis=0)
         if y_pred.ndim == 1:
             y_pred = y_pred[:, np.newaxis]
         if y_pred.shape[1] == 1:
@@ -702,7 +715,7 @@ class UnderBaggingClassifier():
 
 
 from sklearn.base import clone
-class BalanceCascadeClassifier():
+class BalanceCascadeClassifier(BaggingClassifier):
     """
     The implementation of BalanceCascade.
     Hyper-parameters:
@@ -712,25 +725,29 @@ class BalanceCascadeClassifier():
         n_estimators:       Number of iterations / estimators
         k_bins:             Number of hardness bins
     """
-    def __init__(self, base_estimator=DT(), n_estimators=10, random_seed=None):
-        self.base_estimator = base_estimator
-        self.n_estimators = n_estimators
-        self.random_seed = random_seed
-        self.model_list = []
-        # Will be set in the fit function
-        self.feature_cols = None
+    def __init__(self, 
+            base_estimator=DecisionTreeClassifier(), 
+            n_estimators=10, 
+            random_state=None):
 
-    def _fit_baselearner(self, df_train):
-        model = clone(self.base_estimator)
-        return model.fit(df_train[self.feature_cols], df_train['label'])
+        super(BalanceCascadeClassifier, self).__init__(
+            base_estimator=base_estimator,
+            n_estimators=n_estimators,
+            random_state=random_state)
 
     def fit(self, X, y, print_log=False, visualize=False):
+
+        self._validate_estimator()
+        
+        self.estimators_  = []
+        self.estimators_features_ = []
+
         # Initialize majority & minority set
         df = pd.DataFrame(X); df['label'] = y
         df_maj = df[y==0]; n_maj = df_maj.shape[0]
         df_min = df[y==1]; n_min = df_min.shape[0]
-        self.feature_cols = df.columns.tolist()
-        self.feature_cols.remove('label')
+        self.features_ = df.columns.tolist()
+        self.features_.remove('label')
 
         ir = n_min / n_maj
         keep_fp_rate = np.power(ir, 1/(self.n_estimators-1))
@@ -742,14 +759,15 @@ class BalanceCascadeClassifier():
                 df_train.plot.scatter(x=0, y=1, s=3, c='label', colormap='coolwarm', title='Iter {} training set'.format(ibagging))
             # print ('Cascade Iter: {} X_maj: {} X_rus: {} X_min: {}'.format(
             #     ibagging, len(df_maj), len(df_min), len(df_min)))
-            self.model_list.append(self._fit_baselearner(df_train))
+            estimator = self._make_estimator(append=True, random_state=self.random_state)
+            estimator.fit(df_train[self.features_], df_train['label'])
             # drop "easy" majority samples
-            df_maj['pred_proba'] = self.predict(df_maj[self.feature_cols])
+            df_maj['pred_proba'] = self.predict(df_maj[self.features_])
             df_maj = df_maj.sort_values(by='pred_proba', ascending=False)[:int(keep_fp_rate*len(df_maj)+1)]
         return self
     
     def predict_proba(self, X):
-        y_pred = np.array([model.predict(X) for model in self.model_list]).mean(axis=0)
+        y_pred = np.array([model.predict(X) for model in self.estimators_]).mean(axis=0)
         if y_pred.ndim == 1:
             y_pred = y_pred[:, np.newaxis]
         if y_pred.shape[1] == 1:
