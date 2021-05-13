@@ -1,7 +1,6 @@
 <!-- <h1 align="center"> Self-paced Ensemble </h1> -->
 
 ![](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/spe_header.png)
-================================================================
 
 <p align="center">
   <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble">
@@ -48,9 +47,8 @@
 
 **If you find this repository helpful, please consider citing our work:**
 
-```
-@inproceedings{
-    liu2020self-paced-ensemble,
+```bib
+@inproceedings{liu2020self-paced-ensemble,
     title={Self-paced Ensemble for Highly Imbalanced Massive Data Classification},
     author={Liu, Zhining and Cao, Wei and Gao, Zhifeng and Bian, Jiang and Chen, Hechang and Chang, Yi and Liu, Tie-Yan},
     booktitle={2020 IEEE 36th International Conference on Data Engineering (ICDE)},
@@ -84,7 +82,6 @@ $ python setup.py install
 
 # Table of Contents
 
-- [!](#)
 - [Cite Us](#cite-us)
 - [Install](#install)
 - [Table of Contents](#table-of-contents)
