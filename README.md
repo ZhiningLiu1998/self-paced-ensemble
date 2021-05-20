@@ -60,6 +60,8 @@
 
 # Install
 
+**Note: [SPE with multi-class support](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html) is now included in the [imbalanced-ensemble](https://github.com/ZhiningLiu1998/imbalanced-ensemble) [[Doc](https://imbalanced-ensemble.readthedocs.io/en/latest/), [PyPI](https://pypi.org/project/imbalanced-ensemble/)], try it out!**
+
 Our SPE implementation requires following dependencies:
 - [python](https://www.python.org/) (>=3.6)
 - [numpy](https://numpy.org/) (>=1.13.3)
