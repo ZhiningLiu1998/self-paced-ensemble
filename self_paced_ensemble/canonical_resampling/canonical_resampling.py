@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jan 13 14:32:27 2019
-@author: Zhining Liu
-mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
-
 A resampling-based classifier for imbalanced classification.
 15 resampling algorithms are included: 
 'RUS', 'CNN', 'ENN', 'NCR', 'Tomek', 'ALLKNN', 'OSS',
 'NM', 'CC', 'SMOTE', 'ADASYN', 'BorderSMOTE', 'SMOTEENN', 
 'SMOTETomek', 'ORG'.
 
-The implementation of these resampling algorithms is based on imblearn python package.
-imblearn url: https://github.com/scikit-learn-contrib/imbalanced-learn
+The implementation of these resampling algorithms is based on `imblearn`.
+Please refer to https://github.com/scikit-learn-contrib/imbalanced-learn.
 """
+
+# Created on Sun Jan 13 14:32:27 2019
+# Authors: Zhining Liu <zhining.liu@outlook.com>
+# License: MIT
 
 from imblearn.under_sampling import (
     ClusterCentroids, 
@@ -22,7 +22,6 @@ from imblearn.under_sampling import (
     AllKNN, 
     TomekLinks, 
     OneSidedSelection, 
-    RepeatedEditedNearestNeighbours, 
     CondensedNearestNeighbour, 
     NeighbourhoodCleaningRule,
 )
@@ -34,6 +33,12 @@ from imblearn.combine import (
 )
 
 from sklearn.tree import DecisionTreeClassifier as DT
+
+
+SUPPORT_RESAMPLING = ['RUS', 'CNN', 'ENN', 'NCR', 'Tomek', 'ALLKNN', 'OSS',
+                'NM', 'CC', 'SMOTE', 'ADASYN', 'BorderSMOTE', 'SMOTEENN', 
+                'SMOTETomek', 'ORG']
+
 
 class Error(Exception):
     pass

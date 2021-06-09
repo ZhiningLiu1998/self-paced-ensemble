@@ -17,7 +17,7 @@ on Data Engineering (ICDE). IEEE, 2020: 841-852.
 --------------------------------------------------------------------------
 """
 
-from .self_paced_ensemble import SelfPacedEnsembleClassifier
+from ._self_paced_ensemble import SelfPacedEnsembleClassifier
 
 __all__ = [
     "SelfPacedEnsembleClassifier",

@@ -4,7 +4,7 @@ The `self-paced-ensemble.utils` module implement various utilities.
 --------------------------------------------------------------------------
 """
 
-from .utils import (
+from ._utils import (
     load_covtype_dataset,
     make_binary_classification_target,
     imbalance_train_test_split,

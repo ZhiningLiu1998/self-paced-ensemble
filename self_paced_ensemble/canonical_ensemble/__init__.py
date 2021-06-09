@@ -1,13 +1,13 @@
 """
---------------------------------------------------------------------------
+------------------------------------------------------------------------------
 The `self_paced_ensemble.canonical_ensemble` module implement 5 ensemble 
 learning algorithms for imbalanced classification, including:
 'SMOTEBaggingClassifier', 'SMOTEBoostClassifier', 'RUSBoostClassifier', 
 'UnderBaggingClassifier', and 'BalanceCascadeClassifier'.
 
-Note: the implementation of SMOTEBoost&RUSBoost was obtained from
-imbalanced-algorithms. See https://github.com/dialnd/imbalanced-algorithms.
---------------------------------------------------------------------------
+Note: methods in this module are now included in the `imbalanced-ensemble`.
+Please refer to https://imbalanced-ensemble.readthedocs.io/ for more details.
+------------------------------------------------------------------------------
 """
 
 from .canonical_ensemble import (

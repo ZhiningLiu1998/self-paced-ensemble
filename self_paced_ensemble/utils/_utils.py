@@ -1,23 +1,16 @@
 # -*- coding: utf-8 -*-
-"""
-@author: Zhining Liu
-mailto: znliu19@mails.jlu.edu.cn / zhining.liu@outlook.com
-"""
+"""Utilities."""
+
+# Authors: Zhining Liu <zhining.liu@outlook.com>
+# License: MIT
 
 from sklearn.metrics import (
-    f1_score, 
-    accuracy_score, 
-    precision_recall_fscore_support, 
-    roc_auc_score,
     precision_recall_curve, 
-    auc, 
-    roc_curve, 
     average_precision_score, 
     matthews_corrcoef,
     )
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
-import pandas as pd
 import numpy as np
 
 def load_covtype_dataset(subset=0.1, test_size=0.2, random_state=None):
