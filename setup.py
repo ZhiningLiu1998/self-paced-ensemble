@@ -23,6 +23,12 @@ with open(ver_file) as f:
 NAME = 'self-paced-ensemble'
 DESCRIPTION = 'Self-paced Ensemble for classification on class-imbalanced data.'
 URL = 'https://github.com/ZhiningLiu1998/self-paced-ensemble'
+PROJECT_URLS = {
+    'Documentation': 'https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html',
+    'Source': 'https://github.com/ZhiningLiu1998/self-paced-ensemble',
+    'Tracker': 'https://github.com/ZhiningLiu1998/self-paced-ensemble/issues',
+    'Download': 'https://pypi.org/project/self-paced-ensemble/#files',
+}
 EMAIL = 'zhining.liu@outlook.com'
 AUTHOR = 'Zhining Liu'
 REQUIRES_PYTHON = '>=3.6.0'
@@ -30,11 +36,12 @@ VERSION = __version__
 LICENSE = "MIT"
 REQUIRED = [
     "numpy>=1.13.3",
+    "pandas>=1.1.3"
     "scipy>=0.19.1",
     "scikit-learn>=0.24",
     "joblib>=0.11",
     "imbalanced-learn>=0.7.0",
-    "pandas>=1.1.3"
+    "imbalanced-ensemble>=0.1.3",
 ]
 EXTRAS = {
 }
@@ -131,6 +138,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
+    project_urls=PROJECT_URLS,
     packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],

@@ -34,14 +34,19 @@
 </p>
 
 
-<h4 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
-[<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">PDF</a>]
+<h3 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
+<br>
+[<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">Paper</a>]
 [<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble_slides.pdf">Slides</a>]
 [<a href="https://arxiv.org/abs/1909.03500v3">arXiv</a>]
 [<a href="https://pypi.org/project/self-paced-ensemble">PyPI</a>]
-</h4>
+[<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html">Documentation</a>]
+</h3>
 
-**Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly imbalanced classification. It is an easy-to-use solution to class-imbalanced problems, features outstanding computing efficiency, good performance, and wide compatibility with different learning models.**
+**Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly imbalanced classification. It is an easy-to-use solution to class-imbalanced problems, features outstanding computing efficiency, good performance, and wide compatibility with different learning models. This SPE implementation supports multi-class classification.**
+
+
+**Note: SPE is now a part of [imbalanced-ensemble](https://github.com/ZhiningLiu1998/imbalanced-ensemble) [[Doc](https://imbalanced-ensemble.readthedocs.io/en/latest/), [PyPI](https://pypi.org/project/imbalanced-ensemble/)]. Try it for more methods and advanced features!**
 
 # Cite Us
 
@@ -60,27 +65,28 @@
 
 # Install
 
-**Note: [SPE with multi-class support](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html) is now included in the [imbalanced-ensemble](https://github.com/ZhiningLiu1998/imbalanced-ensemble) [[Doc](https://imbalanced-ensemble.readthedocs.io/en/latest/), [PyPI](https://pypi.org/project/imbalanced-ensemble/)], try it out!**
+It is recommended to use **pip** for installation.  
+Please make sure the **latest version** is installed to avoid potential problems:
+```shell
+$ pip install self-paced-ensemble            # normal install
+$ pip install --upgrade self-paced-ensemble  # update if needed
+```
 
-Our SPE implementation requires following dependencies:
+Or you can install SPE by clone this repository:
+```shell
+$ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
+$ cd self-paced-ensemble
+$ python setup.py install
+```
+
+Following dependencies are required:
 - [python](https://www.python.org/) (>=3.6)
 - [numpy](https://numpy.org/) (>=1.13.3)
 - [scipy](https://www.scipy.org/) (>=0.19.1)
 - [joblib](https://pypi.org/project/joblib/) (>=0.11)
 - [scikit-learn](https://scikit-learn.org/stable/) (>=0.24)
 - [imblearn](https://pypi.org/project/imblearn/) (>=0.7.0)
-
-**You can install SPE from [PyPI](https://pypi.org/project/self-paced-ensemble/) by running:**
-```shell
-$ pip install self-paced-ensemble
-```
-
-**Or you can install **SPE** by clone this repository:**
-```shell
-$ git clone https://github.com/ZhiningLiu1998/self-paced-ensemble.git
-$ cd self-paced-ensemble
-$ python setup.py install
-```
+- [imbalanced-ensemble](https://pypi.org/project/imbalanced-ensemble/) (>=0.1.3)
 
 # Table of Contents
 
@@ -91,7 +97,6 @@ $ python setup.py install
 - [Usage](#usage)
   - [Documentation](#documentation)
   - [Examples](#examples)
-  - [Conducting comparative experiments](#conducting-comparative-experiments)
 - [Results](#results)
 - [Miscellaneous](#miscellaneous)
 - [References](#references)
@@ -106,129 +111,38 @@ SPE performs strictly balanced under-sampling in each iteration and is therefore
 
 ## Documentation
 
-**Our SPE implementation can be used much in the same way as the ensemble classifiers in [sklearn.ensemble](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble).**  
-
-| Parameters    | Description   |
-| ------------- | ------------- |
-| `base_estimator` | *object, optional (default=`sklearn.tree.DecisionTreeClassifier()`)* <br> The base estimator to fit on self-paced under-sampled subsets of the dataset. NO need to support sample weighting. Built-in `fit()`, `predict()`, `predict_proba()` methods are required. |
-| `hardness_func`  | *function, optional (default=`lambda y_true, y_pred: np.absolute(y_true-y_pred)`)* <br> User-specified classification hardness function. <br> Input: `y_true` and `y_pred` Output: `hardness` (1-d array)  |
-| `n_estimator`    | *int, optional (default=10)* <br> The number of base estimators in the ensemble. |
-| `k_bins`         | *int, optional (default=10)* <br> The number of hardness bins that were used to approximate hardness distribution. |
-| `estimator_params` | *list of str, default=tuple()* <br> The list of attributes to use as parameters when instantiating a new base estimator. If none are given, default parameters are used. |
-| `n_jobs`         | *int, default=None* <br> The number of jobs to run in parallel for :meth:`predict`. ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context. ``-1`` means using all processors. |
-| `random_state`   | *int / RandomState instance / None, optional (default=None)* <br> If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by `numpy.random`. |
-| `verbose`         | *int, default=0* <br> Controls the verbosity when fitting and predicting. |
-
-| Methods    | Description   |
-| ---------- | ------------- |
-| `fit(self, X, y, label_maj=None, label_min=None)` | Build a self-paced ensemble of estimators from the training set (X, y). <br> `label_maj`/`label_min` specify the label of majority/minority class. <br> By default, we let the minority class be positive class (`label_min=1`). |
-| `predict(self, X)` | Predict class for X. |
-| `predict_proba(self, X)` | Predict class probabilities for X. |
-| `predict_log_proba(self, X)` | Predict class log-probabilities for X. |
-| `score(self, X, y)` | Returns the average precision score on the given test data and labels. |
-
-
-| Attributes    | Description   |
-| ------------- | ------------- |
-| `base_estimator_` | *estimator* <br> The base estimator from which the ensemble is grown. |
-| `estimators_` | *list of estimator* <br> The collection of fitted base estimators. |
+**Our SPE implementation can be used much in the same way as the ensemble classifiers in [sklearn.ensemble](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble). Detailed documentation of ``SelfPacedEnsembleClassifier`` can be found [HERE](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html).**
 
 ## Examples
 
-**A minimal example**
+**API demo**
 ```python
->>> from sklearn.tree import DecisionTreeClassifier
->>> from sklearn.datasets import make_classification
->>> X, y = make_classification(n_samples=100, n_features=4,
-...                         n_informative=3, n_redundant=0,
-...                         n_classes=2, random_state=0, 
-...                         shuffle=False)
->>> clf = SelfPacedEnsembleClassifier(
-...         base_estimator=DecisionTreeClassifier(), 
-...         n_estimators=10,
-...         verbose=1).fit(X, y)
->>> clf.predict([[0, 0, 0, 0]])
-array([1])
-```
-
-**A non-minimal working example** (It demonstrates some of the features of SPE)
-```python
-import numpy as np
 from sklearn.tree import DecisionTreeClassifier
-from self_paced_ensemble import SelfPacedEnsembleClassifier
-from utils import (
-    make_binary_classification_target, 
-    imbalance_train_test_split,
-    load_covtype_dataset)
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
 
-# load dataset
-X_train, X_test, y_train, y_test = load_covtype_dataset(subset=0.1, random_state=42)
+# Prepare class-imbalanced train & test data
+X, y = make_classification(n_classes=2, random_state=42, weights=[0.1, 0.9])
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.5, random_state=42)
 
-def absolute_error(y_true, y_pred):
-    """Self-defined classification hardness function"""
-    return np.absolute(y_true - y_pred)
+# Train an SPE classifier
+clf = SelfPacedEnsembleClassifier(
+        base_estimator=DecisionTreeClassifier(), 
+        n_estimators=10,
+    ).fit(X_train, y_train)
 
-# ensemble training
-spe = SelfPacedEnsembleClassifier(
-    base_estimator=DecisionTreeClassifier(),
-    hardness_func=absolute_error,
-    n_estimators=10,
-    verbose=1).fit(X_train, y_train, label_maj=0, label_min=1)
-
-# predict & evaluate
-y_pred_proba_test = clf.predict_proba(X_test)[:, 1]
-print ('\nTest AUPRC score: ', average_precision_score(y_test, y_pred_proba_test))
-```
-Outputs should be like:
-```
-Dataset used: 		Forest covertypes from UCI (10.0% random subset)
-Positive target:	7
-Imbalance ratio:	27.328
-----------------------------------------------------
-# Samples       : 46480
-# Features      : 54
-# Classes       : 2
-Classes         : 0/1
-Class Dist      : 44840/1640
-Imbalance Ratio : 27.34/1.00
-----------------------------------------------------
-SPE Training: 100%|██████████| 10/10 [00:00<00:00, 23.65it/s]
-[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
-[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
-
-Test AUPRC score:  0.9106885803103659
+# Predict with an SPE classifier
+clf.predict(X_test)
 ```
 
-## Conducting comparative experiments
+**Advanced usage example**
 
-We also provide a simple framework ([*run_example.py*](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/run_example.py)) for conveniently comparing the performance of our method and other baselines. It is also a more complex example of how to use our implementation of ensemble methods to perform classification. To use it, simply run:
+Please see [usage_example.ipynb](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/examples/usage_example.ipynb).
 
-```
-python run_example.py --method=SPEnsemble --n_estimators=10 --runs=10
-```
-Outputs should be like:
-```
-Dataset used:           Forest covertypes from UCI (10.0% random subset)
-Positive target:        7
-Imbalance ratio:        27.328
+**Compare SPE with other methods**
 
-Running method:         SPEnsemble - 10 estimators in 10 independent run(s) ...
-SPEnsemble running: 100%|███████████████████████| 10/10 [00:11<00:00,  1.16s/it]
-ave_run_time:           0.412s
-------------------------------
-Metrics:
-AUCPRC  mean:0.910  std:0.009
-F1      mean:0.872  std:0.006
-G-mean  mean:0.873  std:0.007
-MCC     mean:0.868  std:0.007
-```
-
-| Arguments   | Description   |
-| ----------- | ------------- |
-| `--method` | *string, optional (default=`'SPEnsemble'`)* <br> support: `SPEnsemble`, `SMOTEBoost`, `SMOTEBagging`, `RUSBoost`, `UnderBagging`, `Cascade`, `all` <br> When `all`, the script will run all supported methods. |
-| `--n_estimators` | *int, optional (default=10)* <br> The number of base estimators in the ensemble. |
-| `--runs` | *int, optional (default=10)* <br> The number of independent runs for evaluating method performance. |
-
+Please see [comparison_example.ipynb](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/examples/comparison_example.ipynb).
 
 # Results
 
@@ -263,7 +177,7 @@ Comparisons of SPE with traditional resampling/ensemble methods in terms of perf
 - Implementation of resampling based imbalance learning baselines [6]
 - Additional experimental results
 
-**NOTE:** The implementations of [1],[3] and resampling methods are based on [imbalanced-algorithms](https://github.com/dialnd/imbalanced-algorithms) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
+**NOTE:** The implementations of other ensemble and resampling methods are based on [imbalanced-ensemble](https://github.com/ZhiningLiu1998/imbalanced-ensemble) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
 
 # References
 
