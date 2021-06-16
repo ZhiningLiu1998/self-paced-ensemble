@@ -34,19 +34,25 @@
 </p>
 
 
-<h3 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification" (ICDE 2020).
+<h3 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification"
 <br>
+(ICDE 2020)
 [<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">Paper</a>]
 [<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble_slides.pdf">Slides</a>]
 [<a href="https://arxiv.org/abs/1909.03500v3">arXiv</a>]
 [<a href="https://pypi.org/project/self-paced-ensemble">PyPI</a>]
-[<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html">Documentation</a>]
+[<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">Documentation</a>]
 </h3>
+
 
 **Self-paced Ensemble (SPE) is an ensemble learning framework for massive highly imbalanced classification. It is an easy-to-use solution to class-imbalanced problems, features outstanding computing efficiency, good performance, and wide compatibility with different learning models. This SPE implementation supports multi-class classification.**
 
-
-**Note: SPE is now a part of [imbalanced-ensemble](https://github.com/ZhiningLiu1998/imbalanced-ensemble) [[Doc](https://imbalanced-ensemble.readthedocs.io/en/latest/), [PyPI](https://pypi.org/project/imbalanced-ensemble/)]. Try it for more methods and advanced features!**
+<table><tr><td bgcolor=MistyRose align="center"><strong>
+<font color='red'>Note: </font> 
+<font color=Navy> 
+SPE is now a part of <a href="https://github.com/ZhiningLiu1998/imbalanced-ensemble"> imbalanced-ensemble </a> [<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/">Doc</a>, <a href="https://pypi.org/project/imbalanced-ensemble/">PyPI</a>]. Try it for more methods and advanced features!
+</font>
+</strong></td></tr></table>
 
 # Cite Us
 
@@ -94,9 +100,8 @@ Following dependencies are required:
 - [Install](#install)
 - [Table of Contents](#table-of-contents)
 - [Background](#background)
-- [Usage](#usage)
-  - [Documentation](#documentation)
-  - [Examples](#examples)
+- [Documentation](#documentation)
+- [Examples](#examples)
 - [Results](#results)
 - [Miscellaneous](#miscellaneous)
 - [References](#references)
@@ -107,13 +112,17 @@ SPE performs strictly balanced under-sampling in each iteration and is therefore
 
 ![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/framework.png)
 
-# Usage
+# Documentation
 
-## Documentation
+**Our SPE implementation can be used much in the same way as the [`sklearn.ensemble`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) classifiers. Detailed documentation of ``SelfPacedEnsembleClassifier`` can be found [HERE](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html).**
 
-**Our SPE implementation can be used much in the same way as the ensemble classifiers in [sklearn.ensemble](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble). Detailed documentation of ``SelfPacedEnsembleClassifier`` can be found [HERE](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html).**
+# Examples
 
-## Examples
+You can check out [**examples using SPE**](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html#examples-using-imbalanced-ensemble-ensemble-selfpacedensembleclassifier) for more comprehensive usage examples.
+
+
+![](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/imbalanced-ensemble/example_gallery_snapshot.png)
+
 
 **API demo**
 ```python
