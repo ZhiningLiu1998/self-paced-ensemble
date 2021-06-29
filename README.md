@@ -159,7 +159,7 @@ Dataset links:
 [Credit Fraud](https://www.kaggle.com/mlg-ulb/creditcardfraud), 
 [KDDCUP](https://archive.ics.uci.edu/ml/datasets/kdd+cup+1999+data), 
 [Record Linkage](https://archive.ics.uci.edu/ml/datasets/Record+Linkage+Comparison+Patterns), 
-[Payment Simulation](https://www.kaggle.com/ntnu-testimon/paysim1).  
+[Payment Simulation](https://www.kaggle.com/ealaxi/paysim1).  
 
 ![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/statistics.png)  
 
