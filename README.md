@@ -25,6 +25,9 @@
   <a href="https://www.python.org/">
     <img src="https://img.shields.io/pypi/pyversions/self-paced-ensemble.svg">
   </a>
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/graphs/traffic">
+    <img src="https://visitor-badge.glitch.me/badge?page_id=ZhiningLiu1998.self-paced-ensemble">
+  </a>
   <a href="https://pepy.tech/project/self-paced-ensemble">
     <img src="https://pepy.tech/badge/self-paced-ensemble">
   </a>
@@ -56,7 +59,7 @@ SPE is now a part of <a href="https://github.com/ZhiningLiu1998/imbalanced-ensem
 
 # Cite Us
 
-**If you find this repository helpful, please consider citing our work:**
+**If you find this repository helpful in your work or research, we would greatly appreciate citations to the following [paper](https://arxiv.org/pdf/1909.03500v3.pdf):**
 
 ```bib
 @inproceedings{liu2020self-paced-ensemble,
@@ -187,6 +190,11 @@ Comparisons of SPE with traditional resampling/ensemble methods in terms of perf
 - Additional experimental results
 
 **NOTE:** The implementations of other ensemble and resampling methods are based on [imbalanced-ensemble](https://github.com/ZhiningLiu1998/imbalanced-ensemble) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
+
+Check out our other works:
+- [IMBENS: class-imbalanced ensemble learning in Python](https://github.com/ZhiningLiu1998/imbalanced-ensemble) (Python package)
+- [Awesome-imbalanced-learning: paper, code, frameworks, and libraries](https://github.com/ZhiningLiu1998/awesome-imbalanced-learning) (Resource list)
+- [MESA: Boost Ensemble Imbalanced Learning with MEta-SAmpler](https://github.com/ZhiningLiu1998/mesa) (Meta-imbalanced-learning)
 
 # References
 
