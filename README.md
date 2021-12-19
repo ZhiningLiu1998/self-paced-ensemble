@@ -37,14 +37,17 @@
 </p>
 
 
-<h3 align="center"> "Self-paced Ensemble for Highly Imbalanced Massive Data Classification"
-<br>
+<h3 align="center"> Self-paced Ensemble for Highly Imbalanced Massive Data Classification
 (ICDE 2020)
-[<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">Paper</a>]
-[<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble_slides.pdf">Slides</a>]
-[<a href="https://arxiv.org/abs/1909.03500v3">arXiv</a>]
-[<a href="https://pypi.org/project/self-paced-ensemble">PyPI</a>]
-[<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">Documentation</a>]
+</h3>
+
+<h3 align="center">
+Links: 
+<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">Paper</a> | 
+<a href="https://zhiningliu.com/files/ICDE_2020_SPE_slides.pdf">Slides</a> | 
+<a href="https://arxiv.org/abs/1909.03500v3">arXiv</a> | 
+<a href="https://pypi.org/project/self-paced-ensemble">PyPI</a> | 
+<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">Documentation</a>
 </h3>
 
 
