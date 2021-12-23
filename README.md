@@ -1,7 +1,4 @@
 <!-- <h1 align="center"> Self-paced Ensemble </h1> -->
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ![](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/spe_header.png)
 
@@ -24,6 +21,11 @@
   <a href="https://pypi.org/project/self-paced-ensemble/">
     <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
   </a>
+  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#contributors-">
+    <img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square">
+  </a>
+  <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <br>
   <a href="https://www.python.org/">
     <img src="https://img.shields.io/pypi/pyversions/self-paced-ensemble.svg">
