@@ -1,6 +1,6 @@
 <!-- <h1 align="center"> Self-paced Ensemble </h1> -->
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ![](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/spe_header.png)
@@ -223,6 +223,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://zhiningliu.com"><img src="https://avatars.githubusercontent.com/u/26108487?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Zhining Liu</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=ZhiningLiu1998" title="Code">💻</a> <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=ZhiningLiu1998" title="Documentation">📖</a> <a href="#example-ZhiningLiu1998" title="Examples">💡</a></td>
     <td align="center"><a href="https://yumingfu.space/"><img src="https://avatars.githubusercontent.com/u/23732534?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yuming Fu</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=rudolffu" title="Code">💻</a> <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3Arudolffu" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://thul.io"><img src="https://avatars.githubusercontent.com/u/95307?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thúlio Costa</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=thulio" title="Code">💻</a> <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3Athulio" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
