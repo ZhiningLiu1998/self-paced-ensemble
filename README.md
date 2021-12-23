@@ -21,18 +21,15 @@
   <a href="https://pypi.org/project/self-paced-ensemble/">
     <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
   </a>
-  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#contributors-">
-    <img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square">
-  </a>
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-  <br>
   <a href="https://www.python.org/">
     <img src="https://img.shields.io/pypi/pyversions/self-paced-ensemble.svg">
   </a>
   <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/graphs/traffic">
     <img src="https://visitor-badge.glitch.me/badge?page_id=ZhiningLiu1998.self-paced-ensemble">
   </a>
+  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#contributors-"><img src="https://img.shields.io/badge/all_contributors-5-orange.svg"></a>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
   <a href="https://pepy.tech/project/self-paced-ensemble">
     <img src="https://pepy.tech/badge/self-paced-ensemble">
   </a>
@@ -50,9 +47,11 @@
 Links: 
 <a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">Paper</a> | 
 <a href="https://zhiningliu.com/files/ICDE_2020_SPE_slides.pdf">Slides</a> | 
+<a href="https://www.bilibili.com/video/BV1Fg411L7gk">Video</a> | 
 <a href="https://arxiv.org/abs/1909.03500v3">arXiv</a> | 
 <a href="https://pypi.org/project/self-paced-ensemble">PyPI</a> | 
-<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">Documentation</a>
+<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">Documentation</a> | 
+<a href="https://zhuanlan.zhihu.com/p/86891438">Zhihu/知乎</a>
 </h3>
 
 
@@ -116,6 +115,7 @@ Following dependencies are required:
 - [Results](#results)
 - [Miscellaneous](#miscellaneous)
 - [References](#references)
+  - [Contributors ✨](#contributors-)
 
 # Background
 
@@ -227,6 +227,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://yumingfu.space/"><img src="https://avatars.githubusercontent.com/u/23732534?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yuming Fu</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=rudolffu" title="Code">💻</a> <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3Arudolffu" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://thul.io"><img src="https://avatars.githubusercontent.com/u/95307?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thúlio Costa</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=thulio" title="Code">💻</a> <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3Athulio" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/jerrylususu"><img src="https://avatars.githubusercontent.com/u/17522475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neko Null</b></sub></a><br /><a href="#maintenance-jerrylususu" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/lirenjieArthur"><img src="https://avatars.githubusercontent.com/u/31763604?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lirenjieArthur</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3AlirenjieArthur" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
