@@ -22,9 +22,7 @@
     <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
   </a>
   <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#contributors-">
-    <img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square">
-  </a>
+<img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square">
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <br>
   <a href="https://www.python.org/">
@@ -227,6 +225,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://yumingfu.space/"><img src="https://avatars.githubusercontent.com/u/23732534?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yuming Fu</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=rudolffu" title="Code">💻</a> <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3Arudolffu" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://thul.io"><img src="https://avatars.githubusercontent.com/u/95307?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thúlio Costa</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/commits?author=thulio" title="Code">💻</a> <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3Athulio" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/jerrylususu"><img src="https://avatars.githubusercontent.com/u/17522475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neko Null</b></sub></a><br /><a href="#maintenance-jerrylususu" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/lirenjieArthur"><img src="https://avatars.githubusercontent.com/u/31763604?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lirenjieArthur</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3AlirenjieArthur" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
