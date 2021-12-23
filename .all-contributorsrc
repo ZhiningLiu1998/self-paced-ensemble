@@ -45,6 +45,15 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "lirenjieArthur",
+      "name": "lirenjieArthur",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31763604?v=4",
+      "profile": "https://github.com/lirenjieArthur",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
