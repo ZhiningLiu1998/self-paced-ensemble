@@ -15,6 +15,16 @@
         "doc",
         "example"
       ]
+    },
+    {
+      "login": "rudolffu",
+      "name": "Yuming Fu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23732534?v=4",
+      "profile": "https://yumingfu.space/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
