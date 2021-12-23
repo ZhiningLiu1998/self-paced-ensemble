@@ -35,6 +35,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "jerrylususu",
+      "name": "Neko Null",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17522475?v=4",
+      "profile": "https://github.com/jerrylususu",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
