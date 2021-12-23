@@ -25,6 +25,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "thulio",
+      "name": "Thúlio Costa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/95307?v=4",
+      "profile": "https://thul.io",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
