@@ -22,7 +22,9 @@
     <img src="https://badge.fury.io/py/self-paced-ensemble.svg">
   </a>
   <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#contributors-">
+    <img src="https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square">
+  </a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <br>
   <a href="https://www.python.org/">
