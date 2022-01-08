@@ -54,6 +54,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "mokeeqian",
+      "name": "AC手动机",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45727636?v=4",
+      "profile": "https://github.com/mokeeqian",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
