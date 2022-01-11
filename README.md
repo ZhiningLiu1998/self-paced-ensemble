@@ -50,7 +50,8 @@ Links:
 <a href="https://www.bilibili.com/video/BV1Fg411L7gk">Video</a> | 
 <a href="https://arxiv.org/abs/1909.03500v3">arXiv</a> | 
 <a href="https://pypi.org/project/self-paced-ensemble">PyPI</a> | 
-<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">Documentation</a> | 
+<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">API Reference</a> | 
+  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#related-projects">Related Projects</a> |
 <a href="https://zhuanlan.zhihu.com/p/86891438">Zhihu/知乎</a>
 </h3>
 
@@ -64,7 +65,7 @@ SPE is now a part of <a href="https://github.com/ZhiningLiu1998/imbalanced-ensem
 </font>
 </strong></td></tr></table>
 
-# Cite Us
+## Cite Us
 
 **If you find this repository helpful in your work or research, we would greatly appreciate citations to the following [paper](https://arxiv.org/pdf/1909.03500v3.pdf):**
 
@@ -79,7 +80,7 @@ SPE is now a part of <a href="https://github.com/ZhiningLiu1998/imbalanced-ensem
 }
 ```
 
-# Install
+## Installation
 
 It is recommended to use **pip** for installation.  
 Please make sure the **latest version** is installed to avoid potential problems:
@@ -104,10 +105,10 @@ Following dependencies are required:
 - [imblearn](https://pypi.org/project/imblearn/) (>=0.7.0)
 - [imbalanced-ensemble](https://pypi.org/project/imbalanced-ensemble/) (>=0.1.3)
 
-# Table of Contents
+## Table of Contents
 
 - [Cite Us](#cite-us)
-- [Install](#install)
+- [Installation](#installation)
 - [Table of Contents](#table-of-contents)
 - [Background](#background)
 - [Documentation](#documentation)
@@ -115,19 +116,20 @@ Following dependencies are required:
 - [Results](#results)
 - [Miscellaneous](#miscellaneous)
 - [References](#references)
-  - [Contributors ✨](#contributors-)
+- [Related Projects](#related-projects)
+- [Contributors ✨](#contributors-)
 
-# Background
+## Background
 
 SPE performs strictly balanced under-sampling in each iteration and is therefore very *computationally efficient*. In addition, SPE does not rely on calculating the distance between samples to perform resampling. It can be easily applied to datasets that lack well-defined distance metrics (e.g. with categorical features / missing values) without any modification. Moreover, as a *generic ensemble framework*, our methods can be easily adapted to most of the existing learning methods (e.g., C4.5, SVM, GBDT, and Neural Network) to boost their performance on imbalanced data. Compared to existing imbalance learning methods, *SPE works particularly well on datasets that are large-scale, noisy, and highly imbalanced (e.g. with imbalance ratio greater than 100:1).* Such kind of data widely exists in real-world industrial applications. The figure below gives an overview of the SPE framework.
 
 ![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/framework.png)
 
-# Documentation
+## Documentation
 
 **Our SPE implementation can be used much in the same way as the [`sklearn.ensemble`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) classifiers. Detailed documentation of ``SelfPacedEnsembleClassifier`` can be found [HERE](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html).**
 
-# Examples
+## Examples
 
 You can check out [**examples using SPE**](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html#examples-using-imbalanced-ensemble-ensemble-selfpacedensembleclassifier) for more comprehensive usage examples.
 
@@ -137,6 +139,7 @@ You can check out [**examples using SPE**](https://imbalanced-ensemble.readthedo
 
 **API demo**
 ```python
+from self_paced_ensemble import SelfPacedEnsembleClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
@@ -164,7 +167,7 @@ Please see [usage_example.ipynb](https://github.com/ZhiningLiu1998/self-paced-en
 
 Please see [comparison_example.ipynb](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/examples/comparison_example.ipynb).
 
-# Results
+## Results
 
 Dataset links:
 [Credit Fraud](https://www.kaggle.com/mlg-ulb/creditcardfraud), 
@@ -184,7 +187,7 @@ Comparisons of SPE with traditional resampling/ensemble methods in terms of perf
 
 ![image](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/spe/results_ensemble_curve.png)
 
-# Miscellaneous
+## Miscellaneous
 
 **This repository contains:**
 - Implementation of Self-paced Ensemble
@@ -199,12 +202,7 @@ Comparisons of SPE with traditional resampling/ensemble methods in terms of perf
 
 **NOTE:** The implementations of other ensemble and resampling methods are based on [imbalanced-ensemble](https://github.com/ZhiningLiu1998/imbalanced-ensemble) and [imbalanced-learn](https://github.com/scikit-learn-contrib/imbalanced-learn).
 
-Check out our other works:
-- [IMBENS: class-imbalanced ensemble learning in Python](https://github.com/ZhiningLiu1998/imbalanced-ensemble) (Python package)
-- [Awesome-imbalanced-learning: paper, code, frameworks, and libraries](https://github.com/ZhiningLiu1998/awesome-imbalanced-learning) (Resource list)
-- [MESA: Boost Ensemble Imbalanced Learning with MEta-SAmpler](https://github.com/ZhiningLiu1998/mesa) (Meta-imbalanced-learning)
-
-# References
+## References
 
 | #   | Reference |
 |-----|-------|
@@ -214,6 +212,35 @@ Check out our other works:
 | [4] | R. Barandela, R. M. Valdovinos, and J. S. Sanchez, “New applications´ of ensembles of classifiers,” Pattern Analysis & Applications, vol. 6, no. 3, pp. 245–256, 2003.|
 | [5] | X.-Y. Liu, J. Wu, and Z.-H. Zhou, “Exploratory undersampling for class-imbalance learning,” IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics), vol. 39, no. 2, pp. 539–550, 2009.|
 | [6] | Guillaume Lemaître, Fernando Nogueira, and Christos K. Aridas. Imbalanced-learn: A python toolbox to tackle the curse of imbalanced datasets in machine learning. Journal of Machine Learning Research, 18(17):1–5, 2017.|
+
+## Related Projects
+
+**Check out [Zhining](https://zhiningliu.com/)'s other open-source projects!**  
+<table style="font-size:15px;">
+  <tr>
+    <td align="center"><a href="https://github.com/ZhiningLiu1998/imbalanced-ensemble"><img src="https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/thumbnails/imbens-thumb.png" height="80px" alt=""/><br /><sub><b>Imbalanced-Ensemble [PythonLib]</b></sub></a><br />
+      <a href="https://github.com/ZhiningLiu1998/imbalanced-ensemble/stargazers">
+      <img alt="GitHub stars" src="https://img.shields.io/github/stars/ZhiningLiu1998/imbalanced-ensemble?style=social">
+      </a>
+    </td>
+    <td align="center"><a href="https://github.com/ZhiningLiu1998/awesome-imbalanced-learning"><img src="https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/thumbnails/awesomeil-thumb.png" height="80px" alt=""/><br /><sub><b>Imbalanced Learning [Awesome]</b></sub></a><br />
+      <a href="https://github.com/ZhiningLiu1998/awesome-imbalanced-learning/stargazers">
+      <img alt="GitHub stars" src="https://img.shields.io/github/stars/ZhiningLiu1998/awesome-imbalanced-learning?style=social">
+      </a>
+    </td>
+    <td align="center"><a href="https://github.com/ZhiningLiu1998/awesome-awesome-machine-learning"><img src="https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/thumbnails/awesomeml-thumb.png" height="80px" alt=""/><br /><sub><b>Machine Learning [Awesome]</b></sub></a><br />
+      <a href="https://github.com/ZhiningLiu1998/awesome-awesome-machine-learning/stargazers">
+      <img alt="GitHub stars" src="https://img.shields.io/github/stars/ZhiningLiu1998/awesome-awesome-machine-learning?style=social">
+      </a>
+    </td>
+    <td align="center"><a href="https://github.com/ZhiningLiu1998/mesa"><img src="https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/thumbnails/mesa-thumb.png" height="80px" alt=""/><br /><sub><b>Meta-Sampler [NeurIPS]</b></sub></a><br />
+      <a href="https://github.com/ZhiningLiu1998/mesa/stargazers">
+      <img alt="GitHub stars" src="https://img.shields.io/github/stars/ZhiningLiu1998/mesa?style=social">
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
