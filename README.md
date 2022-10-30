@@ -28,7 +28,7 @@
     <img src="https://visitor-badge.glitch.me/badge?page_id=ZhiningLiu1998.self-paced-ensemble">
   </a>
   <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#contributors-"><img src="https://img.shields.io/badge/all_contributors-6-orange.svg"></a>
+<a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#contributors-"><img src="https://img.shields.io/badge/all_contributors-7-orange.svg"></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <a href="https://pepy.tech/project/self-paced-ensemble">
     <img src="https://pepy.tech/badge/self-paced-ensemble">
@@ -272,6 +272,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/jerrylususu"><img src="https://avatars.githubusercontent.com/u/17522475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neko Null</b></sub></a><br /><a href="#maintenance-jerrylususu" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/lirenjieArthur"><img src="https://avatars.githubusercontent.com/u/31763604?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lirenjieArthur</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3AlirenjieArthur" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/mokeeqian"><img src="https://avatars.githubusercontent.com/u/45727636?v=4?s=100" width="100px;" alt=""/><br /><sub><b>AC手动机</b></sub></a><br /><a href="https://github.com/ZhiningLiu1998/self-paced-ensemble/issues?q=author%3Amokeeqian" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/carlo-moro-4a20a7132"><img src="https://avatars.githubusercontent.com/u/21183273?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Carlo Moro</b></sub></a><br /><a href="#ideas-cnmoro" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
