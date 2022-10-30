@@ -178,6 +178,16 @@ dump(clf, filename='clf.joblib')
 # load the model
 clf = load('clf.joblib')
 ```
+You can also use the alternative APIs provided in SPE:
+```python
+from self_paced_ensemble.utils import save_model, load_model
+
+# save the model
+clf.save('clf.joblib')        # option 1
+save_model(clf, 'clf.joblib') # option 2
+# load the model
+clf = load_model('clf.joblib')
+```
 
 ### **Compare SPE with other methods**
 

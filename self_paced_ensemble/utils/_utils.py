@@ -4,6 +4,7 @@
 # Authors: Zhining Liu <zhining.liu@outlook.com>
 # License: MIT
 
+from joblib import dump, load
 from sklearn.metrics import (
     precision_recall_curve, 
     average_precision_score, 
@@ -82,3 +83,11 @@ def mcc_optim(label, y_pred):
         mcc = matthews_corrcoef(label, y_pred_b)
         mccs.append(mcc)
     return max(mccs)
+
+def save_model(model, filename:str):
+    """Save model to file."""
+    dump(model, filename=filename)
+
+def load_model(filename:str):
+    """Load model from file."""
+    return load(filename)

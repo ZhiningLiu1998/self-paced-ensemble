@@ -13,6 +13,8 @@ from ._utils import (
     f1_optim,
     gm_optim,
     mcc_optim,
+    save_model,
+    load_model,
 )
 
 __all__ = [
@@ -24,4 +26,6 @@ __all__ = [
     "f1_optim",
     "gm_optim",
     "mcc_optim",
+    "save_model",
+    "load_model",
 ]

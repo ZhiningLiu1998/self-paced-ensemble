@@ -16,6 +16,7 @@ compatibility with different learning models.
 
 from collections import Counter
 import numpy as np
+from joblib import dump
 
 
 from .base import BaseImbalancedEnsemble, MAX_INT
@@ -445,6 +446,10 @@ class SelfPacedEnsembleClassifier(BaseImbalancedEnsemble):
             y_pred_proba_new = self.estimators_[-1].predict_proba(X)
             self.y_pred_proba_latest = (y_pred_proba_latest * i_iter + y_pred_proba_new) / (i_iter+1)
         return
+    
+    def save(self, filename:str):
+        """Save the model to a file."""
+        dump(self, filename=filename)
 
 # %%
 
