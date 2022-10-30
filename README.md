@@ -113,6 +113,10 @@ Following dependencies are required:
 - [Background](#background)
 - [Documentation](#documentation)
 - [Examples](#examples)
+  - [**API demo**](#api-demo)
+  - [**Advanced usage example**](#advanced-usage-example)
+  - [Save & Load model](#save--load-model)
+  - [**Compare SPE with other methods**](#compare-spe-with-other-methods)
 - [Results](#results)
 - [Miscellaneous](#miscellaneous)
 - [References](#references)
@@ -137,7 +141,7 @@ You can check out [**examples using SPE**](https://imbalanced-ensemble.readthedo
 ![](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/imbalanced-ensemble/example_gallery_snapshot.png)
 
 
-**API demo**
+### **API demo**
 ```python
 from self_paced_ensemble import SelfPacedEnsembleClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -159,11 +163,23 @@ clf = SelfPacedEnsembleClassifier(
 clf.predict(X_test)
 ```
 
-**Advanced usage example**
+### **Advanced usage example**
 
 Please see [usage_example.ipynb](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/examples/usage_example.ipynb).
 
-**Compare SPE with other methods**
+### Save & Load model
+
+We recommend to use joblib or pickle for saving and loading SPE models, e.g.,
+```python
+from joblib import dump, load
+
+# save the model
+dump(clf, filename='clf.joblib')
+# load the model
+clf = load('clf.joblib')
+```
+
+### **Compare SPE with other methods**
 
 Please see [comparison_example.ipynb](https://github.com/ZhiningLiu1998/self-paced-ensemble/blob/master/examples/comparison_example.ipynb).
 
