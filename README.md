@@ -45,13 +45,13 @@
 
 <h3 align="center">
 Links: 
-<a href="http://zhiningliu.com/files/ICDE_2020_self_paced_ensemble.pdf">Paper</a> | 
+<a href="https://conferences.computer.org/icde/2020/pdfs/ICDE2020-5acyuqhpJ6L9P042wmjY1p/290300a841/290300a841.pdf">Paper</a> | 
 <a href="https://zhiningliu.com/files/ICDE_2020_SPE_slides.pdf">Slides</a> | 
 <a href="https://www.bilibili.com/video/BV1Fg411L7gk">Video</a> | 
 <a href="https://arxiv.org/abs/1909.03500v3">arXiv</a> | 
 <a href="https://pypi.org/project/self-paced-ensemble">PyPI</a> | 
 <a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">API Reference</a> | 
-  <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#related-projects">Related Projects</a> |
+<a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#related-projects">Related Projects</a> |
 <a href="https://zhuanlan.zhihu.com/p/86891438">Zhihu/知乎</a>
 </h3>
 
@@ -115,7 +115,7 @@ Following dependencies are required:
 - [Examples](#examples)
   - [**API demo**](#api-demo)
   - [**Advanced usage example**](#advanced-usage-example)
-  - [Save & Load model](#save--load-model)
+  - [Save \& Load model](#save--load-model)
   - [**Compare SPE with other methods**](#compare-spe-with-other-methods)
 - [Results](#results)
 - [Miscellaneous](#miscellaneous)
@@ -230,14 +230,14 @@ Comparisons of SPE with traditional resampling/ensemble methods in terms of perf
 
 ## References
 
-| #   | Reference |
-|-----|-------|
-| [1] | N. V. Chawla, A. Lazarevic, L. O. Hall, and K. W. Bowyer, Smoteboost: Improving prediction of the minority class in boosting. in European conference on principles of data mining and knowledge discovery. Springer, 2003, pp. 107–119|
-| [2] | S. Wang and X. Yao, Diversity analysis on imbalanced data sets by using ensemble models. in 2009 IEEE Symposium on Computational Intelligence and Data Mining. IEEE, 2009, pp. 324–331.|
-| [3] | C. Seiffert, T. M. Khoshgoftaar, J. Van Hulse, and A. Napolitano, “Rusboost: A hybrid approach to alleviating class imbalance,” IEEE Transactions on Systems, Man, and Cybernetics-Part A: Systems and Humans, vol. 40, no. 1, pp. 185–197, 2010.|
-| [4] | R. Barandela, R. M. Valdovinos, and J. S. Sanchez, “New applications´ of ensembles of classifiers,” Pattern Analysis & Applications, vol. 6, no. 3, pp. 245–256, 2003.|
-| [5] | X.-Y. Liu, J. Wu, and Z.-H. Zhou, “Exploratory undersampling for class-imbalance learning,” IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics), vol. 39, no. 2, pp. 539–550, 2009.|
-| [6] | Guillaume Lemaître, Fernando Nogueira, and Christos K. Aridas. Imbalanced-learn: A python toolbox to tackle the curse of imbalanced datasets in machine learning. Journal of Machine Learning Research, 18(17):1–5, 2017.|
+| #   | Reference                                                                                                                                                                                                                                         |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [1] | N. V. Chawla, A. Lazarevic, L. O. Hall, and K. W. Bowyer, Smoteboost: Improving prediction of the minority class in boosting. in European conference on principles of data mining and knowledge discovery. Springer, 2003, pp. 107–119            |
+| [2] | S. Wang and X. Yao, Diversity analysis on imbalanced data sets by using ensemble models. in 2009 IEEE Symposium on Computational Intelligence and Data Mining. IEEE, 2009, pp. 324–331.                                                           |
+| [3] | C. Seiffert, T. M. Khoshgoftaar, J. Van Hulse, and A. Napolitano, “Rusboost: A hybrid approach to alleviating class imbalance,” IEEE Transactions on Systems, Man, and Cybernetics-Part A: Systems and Humans, vol. 40, no. 1, pp. 185–197, 2010. |
+| [4] | R. Barandela, R. M. Valdovinos, and J. S. Sanchez, “New applications´ of ensembles of classifiers,” Pattern Analysis & Applications, vol. 6, no. 3, pp. 245–256, 2003.                                                                            |
+| [5] | X.-Y. Liu, J. Wu, and Z.-H. Zhou, “Exploratory undersampling for class-imbalance learning,” IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics), vol. 39, no. 2, pp. 539–550, 2009.                                          |
+| [6] | Guillaume Lemaître, Fernando Nogueira, and Christos K. Aridas. Imbalanced-learn: A python toolbox to tackle the curse of imbalanced datasets in machine learning. Journal of Machine Learning Research, 18(17):1–5, 2017.                         |
 
 ## Related Projects
 
