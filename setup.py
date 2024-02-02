@@ -41,7 +41,7 @@ REQUIRED = [
     "scikit-learn>=0.24",
     "joblib>=0.11",
     "imbalanced-learn>=0.7.0",
-    "imbalanced-ensemble>=0.1.6",
+    "imbalanced-ensemble>=0.2.1",
 ]
 EXTRAS = {
 }
