@@ -4,4 +4,4 @@ dealing with binary class-imbalanced classification problems in machine learning
 """
 # License: MIT
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'

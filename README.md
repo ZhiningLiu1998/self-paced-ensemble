@@ -50,7 +50,7 @@ Links:
 <a href="https://www.bilibili.com/video/BV1Fg411L7gk">Video</a> | 
 <a href="https://arxiv.org/abs/1909.03500v3">arXiv</a> | 
 <a href="https://pypi.org/project/self-paced-ensemble">PyPI</a> | 
-<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html">API Reference</a> | 
+<a href="https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbens.ensemble.SelfPacedEnsembleClassifier.html">API Reference</a> | 
 <a href="https://github.com/ZhiningLiu1998/self-paced-ensemble#related-projects">Related Projects</a> |
 <a href="https://zhuanlan.zhihu.com/p/86891438">Zhihu/知乎</a>
 </h3>
@@ -131,11 +131,11 @@ SPE performs strictly balanced under-sampling in each iteration and is therefore
 
 ## Documentation
 
-**Our SPE implementation can be used much in the same way as the [`sklearn.ensemble`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) classifiers. Detailed documentation of ``SelfPacedEnsembleClassifier`` can be found [HERE](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html).**
+**Our SPE implementation can be used much in the same way as the [`sklearn.ensemble`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble) classifiers. Detailed documentation of ``SelfPacedEnsembleClassifier`` can be found [HERE](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbens.ensemble.SelfPacedEnsembleClassifier.html).**
 
 ## Examples
 
-You can check out [**examples using SPE**](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.SelfPacedEnsembleClassifier.html#examples-using-imbalanced-ensemble-ensemble-selfpacedensembleclassifier) for more comprehensive usage examples.
+You can check out [**examples using SPE**](https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbens.ensemble.SelfPacedEnsembleClassifier.html#examples-using-imbalanced-ensemble-ensemble-selfpacedensembleclassifier) for more comprehensive usage examples.
 
 
 ![](https://raw.githubusercontent.com/ZhiningLiu1998/figures/master/imbalanced-ensemble/example_gallery_snapshot.png)

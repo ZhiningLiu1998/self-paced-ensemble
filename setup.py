@@ -24,7 +24,7 @@ NAME = 'self-paced-ensemble'
 DESCRIPTION = 'Self-paced Ensemble for classification on class-imbalanced data.'
 URL = 'https://github.com/ZhiningLiu1998/self-paced-ensemble'
 PROJECT_URLS = {
-    'Documentation': 'https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbalanced_ensemble.ensemble.under_sampling.SelfPacedEnsembleClassifier.html',
+    'Documentation': 'https://imbalanced-ensemble.readthedocs.io/en/latest/api/ensemble/_autosummary/imbens.ensemble.under_sampling.SelfPacedEnsembleClassifier.html',
     'Source': 'https://github.com/ZhiningLiu1998/self-paced-ensemble',
     'Tracker': 'https://github.com/ZhiningLiu1998/self-paced-ensemble/issues',
     'Download': 'https://pypi.org/project/self-paced-ensemble/#files',
@@ -40,7 +40,7 @@ REQUIRED = [
     "scipy>=0.19.1",
     "scikit-learn>=0.24",
     "joblib>=0.11",
-    "imbalanced-learn>=0.7.0",
+    "imbalanced-learn>=0.12.0",
     "imbalanced-ensemble>=0.2.1",
 ]
 EXTRAS = {

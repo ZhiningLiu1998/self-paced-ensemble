@@ -14,8 +14,8 @@ Please refer to https://imbalanced-ensemble.readthedocs.io/ for more details.
 
 # %%
 
-from imbalanced_ensemble.ensemble import SMOTEBoostClassifier
-from imbalanced_ensemble.ensemble import SMOTEBaggingClassifier
-from imbalanced_ensemble.ensemble import RUSBoostClassifier
-from imbalanced_ensemble.ensemble import UnderBaggingClassifier
-from imbalanced_ensemble.ensemble import BalanceCascadeClassifier
+from imbens.ensemble import SMOTEBoostClassifier
+from imbens.ensemble import SMOTEBaggingClassifier
+from imbens.ensemble import RUSBoostClassifier
+from imbens.ensemble import UnderBaggingClassifier
+from imbens.ensemble import BalanceCascadeClassifier

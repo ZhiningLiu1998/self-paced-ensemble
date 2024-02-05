@@ -373,7 +373,7 @@ class SelfPacedEnsembleClassifier(BaseImbalancedEnsemble):
         # Clear any previous fit results.
         self.estimators_ = []
         self.estimators_features_ = []
-        self.estimators_n_training_samples_ = np.zeros(n_estimators, dtype=np.int)
+        self.estimators_n_training_samples_ = np.zeros(n_estimators, dtype=int)
         self.samplers_ = []
         
         # Genrate random seeds array
@@ -531,7 +531,7 @@ if __name__ == '__main__':
 
 
     # %%
-    from imbalanced_ensemble.visualizer import ImbalancedEnsembleVisualizer
+    from imbens.visualizer import ImbalancedEnsembleVisualizer
 
     visualizer = ImbalancedEnsembleVisualizer(
         eval_datasets = None,
